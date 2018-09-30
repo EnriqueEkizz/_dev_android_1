@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="itemlist_height">50dp</dimen>
+    <dimen name="itemlist_marginbottom">10dp</dimen>
+    <dimen name="icon_width_itemlist">40dp</dimen>
+    <dimen name="icon_height_itemlist">40dp</dimen>
+</resources>

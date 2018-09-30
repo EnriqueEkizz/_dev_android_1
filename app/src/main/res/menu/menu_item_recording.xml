@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/recording_add_to_new_project"
+        android:icon="@mipmap/ic_launcher"
+        app:showAsAction="always"
+        tools:ignore="MenuTitle" />
+    <item
+        android:id="@+id/recording_add_to_project"
+        android:icon="@mipmap/ic_launcher"
+        app:showAsAction="always"
+        tools:ignore="MenuTitle"/>
+    <item
+        android:id="@+id/recording_delete"
+        android:icon="@mipmap/ic_launcher"
+        app:showAsAction="always"
+        tools:ignore="MenuTitle"/>
+</menu>

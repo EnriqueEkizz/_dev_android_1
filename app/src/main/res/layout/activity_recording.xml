@@ -14,6 +14,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Grabando..."
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="25dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textSize="70dp"
             android:text="00:00:07"
             android:textColor="@color/white"
@@ -24,26 +32,14 @@
         android:layout_height="match_parent"
         android:paddingBottom="20dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="10dp"
             android:layout_weight="1"
-            android:gravity="bottom|center">
+            android:gravity="top|center">
             <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@color/colorPrimaryDark"
-                android:src="@drawable/ic_delete" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="10dp"
-            android:layout_weight="1"
-            android:gravity="bottom|center">
-            <ImageButton
+                android:id="@+id/btnRecording"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:background="@drawable/shape_btn_play_record"
@@ -52,13 +48,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="10dp"
             android:layout_weight="1"
-            android:gravity="bottom|center">
+            android:gravity="top|center">
             <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@color/colorPrimaryDark"
+                android:id="@+id/btnSaveRecord"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/shape_btn_play_record"
                 android:src="@drawable/ic_save_record" />
         </LinearLayout>
     </LinearLayout>

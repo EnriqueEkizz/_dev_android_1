@@ -33,7 +33,10 @@ public class MainActivity extends FragmentActivity{
         fabActividadA = findViewById(R.id.fabOptionA);
 
         //CONSEGUIR LISTA DE GRABACION Y PROYECTOS
-        pageAdapter_sources.addPageList(new list_recorded());
+        /* Path de directorio de grabaciones*/
+        String pathExternalStorageRecording = getExternalFilesDir("Recordings").toString();
+        /* Cargando listas en pageAdapter*/
+        pageAdapter_sources.addPageList(list_recorded.newInstance(pathExternalStorageRecording ));
         pageAdapter_sources.addPageList(new list_project());
 
         viewPager.setAdapter(pageAdapter_sources);

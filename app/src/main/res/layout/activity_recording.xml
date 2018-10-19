@@ -51,11 +51,11 @@
             android:layout_weight="1"
             android:gravity="top|center">
             <ImageButton
-                android:id="@+id/btnSaveRecord"
+                android:id="@+id/btnResetRecorder"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:background="@drawable/shape_btn_play_record"
-                android:src="@drawable/ic_save_record" />
+                android:src="@drawable/ic_reset_recorder" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

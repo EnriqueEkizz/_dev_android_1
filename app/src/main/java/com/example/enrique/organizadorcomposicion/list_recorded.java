@@ -10,15 +10,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class list_recorded extends Fragment {
+    private static String pathRecorded;
     View view;
     private RecyclerView recyclerView;
     private List<clsItemRecording> lstData;
 
+    // CONSTRUCTOR
     public list_recorded() {
+
+    }
+
+    // RECIBIR PATH DE LISTA DE GRABACIONES
+    public static list_recorded newInstance(String path) {
+        list_recorded list = new list_recorded();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("Path", path);
+        list.setArguments(bundle);
+
+        return list;
     }
 
     @Nullable
@@ -38,17 +58,19 @@ public class list_recorded extends Fragment {
         super.onCreate(savedInstanceState);
 
         lstData = new ArrayList<>();
-        lstData.add(new clsItemRecording("Grabación 12", "29/29/2018 04:30", "04:30",""));
-        lstData.add(new clsItemRecording("Grabación 11", "29/29/2018 02:30", "01:45",""));
-        lstData.add(new clsItemRecording("Grabación 10", "29/29/2018 04:30", "04:30",""));
-        lstData.add(new clsItemRecording("Grabación 9", "29/29/2018 02:30", "01:45",""));
-        lstData.add(new clsItemRecording("Grabación 8", "29/29/2018 04:30", "04:30",""));
-        lstData.add(new clsItemRecording("Grabación 7", "29/29/2018 02:30", "01:45",""));
-        lstData.add(new clsItemRecording("Grabación 6", "29/29/2018 04:30", "04:30",""));
-        lstData.add(new clsItemRecording("Grabación 5", "29/29/2018 02:30", "01:45",""));
-        lstData.add(new clsItemRecording("Grabación 4", "29/29/2018 04:30", "04:30",""));
-        lstData.add(new clsItemRecording("Grabación 3", "29/29/2018 02:30", "01:45",""));
-        lstData.add(new clsItemRecording("Grabación 2", "29/29/2018 04:30", "04:30",""));
-        lstData.add(new clsItemRecording("Grabación 1", "29/29/2018 02:30", "01:45",""));
+        Date date;
+        String fecha;
+
+        // OBTENER CONTENIDO DE DIRECTORIO DE GRABACIONES
+        String path = getArguments().getString("Path");
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        for (int i = 0; i < files.length; i++)
+        {
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            date = new Date(files[i].lastModified());
+
+            lstData.add(new clsItemRecording(files[i].getName(), dateFormat.format(date), "01:45",path + "/" + files[i].getName()));
+        }
     }
 }

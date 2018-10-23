@@ -1,5 +1,6 @@
 package com.example.enrique.organizadorcomposicion;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,10 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.enrique.organizadorcomposicion.Activity.MainActivity;
+import com.example.enrique.organizadorcomposicion.Activity.ProjectActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class list_project extends Fragment {
+public class list_project extends Fragment{
 
     View view;
     private RecyclerView recyclerView;
@@ -39,16 +43,7 @@ public class list_project extends Fragment {
 
         lstData = new ArrayList<>();
         lstData.add(new clsItemProject("Proyecto 12", "29/29/2018 04:30"));
-        lstData.add(new clsItemProject("Proyecto 11", "29/29/2018 02:30"));
+        lstData.add(new clsItemProject("Proyecto 11", "29/29/2018 04:30"));
         lstData.add(new clsItemProject("Proyecto 10", "29/29/2018 04:30"));
-        lstData.add(new clsItemProject("Proyecto 9", "29/29/2018 02:30"));
-        lstData.add(new clsItemProject("Proyecto 8", "29/29/2018 04:30"));
-        lstData.add(new clsItemProject("Proyecto 7", "29/29/2018 02:30"));
-        lstData.add(new clsItemProject("Proyecto 6", "29/29/2018 04:30"));
-        lstData.add(new clsItemProject("Proyecto 5", "29/29/2018 02:30"));
-        lstData.add(new clsItemProject("Proyecto 4", "29/29/2018 04:30"));
-        lstData.add(new clsItemProject("Proyecto 3", "29/29/2018 02:30"));
-        lstData.add(new clsItemProject("Proyecto 2", "29/29/2018 04:30"));
-        lstData.add(new clsItemProject("Proyecto 1", "29/29/2018 02:30"));
     }
 }

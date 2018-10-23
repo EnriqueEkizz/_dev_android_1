@@ -1,12 +1,19 @@
 package com.example.enrique.organizadorcomposicion;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.enrique.organizadorcomposicion.Activity.MainActivity;
+import com.example.enrique.organizadorcomposicion.Activity.ProjectActivity;
+import com.example.enrique.organizadorcomposicion.Activity.RecordActivity;
 
 import java.util.List;
 
@@ -24,8 +31,16 @@ public class AdapterListProject extends RecyclerView.Adapter<AdapterListProject.
     @Override
     public AdapterListProject.VHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_project_file, viewGroup, false);
+        AdapterListProject.VHolder vHolder= new AdapterListProject.VHolder(view, context);
 
-        AdapterListProject.VHolder vHolder= new AdapterListProject.VHolder(view);
+        // Establecer click listener sobre items de proyecto
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProjectActivity.class);
+                context.startActivity(intent);
+            }
+        });
 
         return vHolder;
     }
@@ -42,17 +57,17 @@ public class AdapterListProject extends RecyclerView.Adapter<AdapterListProject.
     }
 
     ///////////////////// CLASE ViewHolder
-    public static class VHolder extends RecyclerView.ViewHolder {
+    public static class VHolder extends RecyclerView.ViewHolder{
 
         private TextView tvTitulo;
         private TextView tvFechaCreacion;
+        private Context context;
 
-        public VHolder(@NonNull View itemView) {
+        public VHolder(@NonNull View itemView, Context context) {
             super(itemView);
-
+            this.context = context;
             tvTitulo = (TextView)itemView.findViewById(R.id.tvTitulo);
             tvFechaCreacion= (TextView)itemView.findViewById(R.id.tvFechaCreacion);
         }
     }
-
 }

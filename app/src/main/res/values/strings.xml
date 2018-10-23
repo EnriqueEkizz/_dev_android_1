@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Organizador composicion</string>
+    <string name="title_activity_project">ProjectActivity</string>
 </resources>

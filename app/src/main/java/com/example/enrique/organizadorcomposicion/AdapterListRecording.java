@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.enrique.organizadorcomposicion.Entities.clsItemRecording;
+
 import java.util.List;
 
 public class AdapterListRecording extends RecyclerView.Adapter<AdapterListRecording.VHolder> {
@@ -22,10 +24,9 @@ public class AdapterListRecording extends RecyclerView.Adapter<AdapterListRecord
 
     @NonNull
     @Override
-    public VHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public AdapterListRecording.VHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_recorded_file, viewGroup, false);
-
-        VHolder vHolder= new VHolder(view);
+        AdapterListRecording.VHolder vHolder= new AdapterListRecording.VHolder(view);
 
         return vHolder;
     }

@@ -9,6 +9,11 @@ public class clsProjectStructure {
     private ArrayList<String> Recordings;
     private ArrayList<clsHarmonyBlock> HarmonyBlocks;
 
+    public clsProjectStructure() {
+        this.Recordings = new ArrayList<>();
+        this.HarmonyBlocks = new ArrayList<>();
+    }
+
     public void addRecording(String xRecording) {
         this.Recordings.add(xRecording);
     }

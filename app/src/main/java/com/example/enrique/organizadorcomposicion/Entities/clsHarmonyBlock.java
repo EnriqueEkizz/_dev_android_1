@@ -10,6 +10,10 @@ public class clsHarmonyBlock {
     private String Recording = "";
     private ArrayList<String> HarmonyNotes;
 
+    public clsHarmonyBlock() {
+        this.HarmonyNotes = new ArrayList<>();
+    }
+
     public void setRecording(String xRecording) {
         this.Recording = xRecording;
     }

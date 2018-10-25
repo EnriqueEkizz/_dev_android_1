@@ -1,6 +1,5 @@
 package com.example.enrique.organizadorcomposicion;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,8 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.enrique.organizadorcomposicion.Activity.MainActivity;
-import com.example.enrique.organizadorcomposicion.Activity.ProjectActivity;
+import com.example.enrique.organizadorcomposicion.Entities.clsItemProject;
 
 import java.util.ArrayList;
 import java.util.List;

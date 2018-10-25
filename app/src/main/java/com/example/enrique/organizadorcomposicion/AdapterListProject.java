@@ -1,19 +1,16 @@
 package com.example.enrique.organizadorcomposicion;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.enrique.organizadorcomposicion.Activity.MainActivity;
 import com.example.enrique.organizadorcomposicion.Activity.ProjectActivity;
-import com.example.enrique.organizadorcomposicion.Activity.RecordActivity;
+import com.example.enrique.organizadorcomposicion.Entities.clsItemProject;
 
 import java.util.List;
 

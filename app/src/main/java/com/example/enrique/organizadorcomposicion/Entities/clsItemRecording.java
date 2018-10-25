@@ -1,4 +1,4 @@
-package com.example.enrique.organizadorcomposicion;
+package com.example.enrique.organizadorcomposicion.Entities;
 
 public class clsItemRecording{
     private String titulo;

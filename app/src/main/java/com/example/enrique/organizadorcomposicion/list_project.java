@@ -29,7 +29,7 @@ public class list_project extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.list_project, container,false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.rvListProject);
+        recyclerView = view.findViewById(R.id.rvListProject);
         AdapterListProject adapterListProject = new AdapterListProject(getContext(), lstData);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapterListProject);

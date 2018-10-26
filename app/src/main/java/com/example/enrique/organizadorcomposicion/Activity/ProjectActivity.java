@@ -16,6 +16,7 @@ import com.example.enrique.organizadorcomposicion.item_harmonyblock;
 
 public class ProjectActivity extends AppCompatActivity {
 
+    // CLASE PRINCIPAL DE LA ESTRUCTURA DEL PROYECTO
     clsProjectStructure projectStructure;
 
     @Override
@@ -23,18 +24,23 @@ public class ProjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project);
 
+        //SETEAR CLASE DE ESTRUCTURA DE PROYECTO CON INTENT
         projectStructure = new clsProjectStructure();
 
+        //RECYCLERVIEW
         RecyclerView recyclerView = (RecyclerView) this.findViewById(R.id.rvListContentProject);
+
+        //TOOLBAR
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Proyecto1");
         setSupportActionBar(toolbar);
 
+        //ADAPTADOR RECYCLERVIEW
         final AdapterContentProject adapterContentProject = new AdapterContentProject(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapterContentProject);
 
-        // ACCION DE FLOATING BUTTON
+        //FLOATING ACTION BUTTON
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabOptionB);
         fab.setOnClickListener(new View.OnClickListener() {
             // AGREGAR NUEVO BLOQUE DE CIRCULO ARMONICO

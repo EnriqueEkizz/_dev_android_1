@@ -3,9 +3,12 @@ package com.example.enrique.organizadorcomposicion;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 
 import com.example.enrique.organizadorcomposicion.Entities.clsHarmonyBlock;
 
@@ -47,8 +50,21 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
     ///////////////////// CLASE ViewHolder
     public static class VHolder extends RecyclerView.ViewHolder {
 
-        public VHolder(@NonNull View itemView, Context context) {
+        private ImageButton btnMenu;
+
+        public VHolder(@NonNull View itemView, final Context context) {
             super(itemView);
+
+            btnMenu = itemView.findViewById(R.id.imgbtn_menu);
+            btnMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("ENTRO MENU : ", "SI");
+                    PopupMenu popupMenu = new PopupMenu(context, v);
+                    popupMenu.getMenuInflater().inflate(R.menu.menu_harmonyblock, popupMenu.getMenu());
+                    popupMenu.show();
+                }
+            });
         }
     }
 }

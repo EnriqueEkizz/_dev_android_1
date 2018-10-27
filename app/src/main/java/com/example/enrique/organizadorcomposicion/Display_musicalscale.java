@@ -10,21 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class Display_musicalscale extends Fragment {
 
     private View view;
-    private JSONObject JsonScaleNotes;
+    private String MusicalScale;
 
     public Display_musicalscale() {
     }
 
-    public static Display_musicalscale newInstance(JSONObject jsonObject) {
+    public static Display_musicalscale newInstance(String dataScaleNote) {
         Display_musicalscale display_musicalscale = new Display_musicalscale();
         Bundle bundle = new Bundle();
-        bundle.putString("JSONSCALE", jsonObject.toString());
+        bundle.putString("dataSCALENOTE", dataScaleNote);
         display_musicalscale.setArguments(bundle);
         return display_musicalscale;
     }
@@ -32,11 +29,8 @@ public class Display_musicalscale extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            JsonScaleNotes = new JSONObject(getArguments().getString("JSONSCALE"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        //LEYENDO NOTA MUSICAL BASE DE PROYECTO
+        MusicalScale = getArguments().getString("dataSCALENOTE");
     }
 
     @Nullable
@@ -46,7 +40,23 @@ public class Display_musicalscale extends Fragment {
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.frameMusicalScale, new Item_note().newInstance("D"));
+        //NOTAS MUSICALES DE ESCALA
+        fragmentTransaction.add(R.id.frameMusicalScale, new Item_scalenote().newInstance("C"));
+        fragmentTransaction.add(R.id.frameMusicalScale, new Item_scalenote().newInstance("D"));
+        fragmentTransaction.add(R.id.frameMusicalScale, new Item_scalenote().newInstance("E"));
+        fragmentTransaction.add(R.id.frameMusicalScale, new Item_scalenote().newInstance("F"));
+        fragmentTransaction.add(R.id.frameMusicalScale, new Item_scalenote().newInstance("G"));
+        fragmentTransaction.add(R.id.frameMusicalScale, new Item_scalenote().newInstance("A"));
+        fragmentTransaction.add(R.id.frameMusicalScale, new Item_scalenote().newInstance("B"));
+        //ACORDES ARMONICOS DE ESCALA
+        fragmentTransaction.add(R.id.frameHarmonyScale, new Item_harmonynote().newInstance("C"));
+        fragmentTransaction.add(R.id.frameHarmonyScale, new Item_harmonynote().newInstance("Dm"));
+        fragmentTransaction.add(R.id.frameHarmonyScale, new Item_harmonynote().newInstance("Em"));
+        fragmentTransaction.add(R.id.frameHarmonyScale, new Item_harmonynote().newInstance("F"));
+        fragmentTransaction.add(R.id.frameHarmonyScale, new Item_harmonynote().newInstance("G"));
+        fragmentTransaction.add(R.id.frameHarmonyScale, new Item_harmonynote().newInstance("Am"));
+        fragmentTransaction.add(R.id.frameHarmonyScale, new Item_harmonynote().newInstance("Bm"));
+        fragmentTransaction.commit();
         return  view;
     }
 }

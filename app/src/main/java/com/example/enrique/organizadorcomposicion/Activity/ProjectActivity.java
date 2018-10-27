@@ -2,6 +2,8 @@ package com.example.enrique.organizadorcomposicion.Activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.enrique.organizadorcomposicion.AdapterContentProject;
+import com.example.enrique.organizadorcomposicion.Display_musicalscale;
 import com.example.enrique.organizadorcomposicion.Entities.clsHarmonyBlock;
 import com.example.enrique.organizadorcomposicion.Entities.clsProjectStructure;
 import com.example.enrique.organizadorcomposicion.R;
@@ -40,6 +43,15 @@ public class ProjectActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapterContentProject);
 
+        //ESCALA MUSICAL DE PROYECTO
+        FragmentManager frgManager = getSupportFragmentManager();
+        FragmentTransaction frgTransaction = frgManager.beginTransaction();
+        Display_musicalscale frgMusicalScale = new Display_musicalscale().newInstance("C");
+
+        frgTransaction.add(R.id.frameSpaceMusicalScale, frgMusicalScale);
+        frgTransaction.commit();
+
+
         //FLOATING ACTION BUTTON
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabOptionB);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +61,7 @@ public class ProjectActivity extends AppCompatActivity {
                 // CREAR NUEVA CLASE DE BLOQUES ARMONICOS
                 projectStructure.addHarmonyBlock(new clsHarmonyBlock());
 
-                // CREAR FRAGMENTO BLOQUE ARMONICO
+                // CREAR FRAGMENT BLOQUE ARMONICO
                 adapterContentProject.addHarmonyBlock(new item_harmonyblock());
                 adapterContentProject.notifyDataSetChanged();
             }

@@ -12,17 +12,17 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Item_note extends Fragment {
+public class Item_scalenote extends Fragment {
 
     private View view;
     private String Note;
     private JSONObject jsonObject;
 
-    public Item_note() {
+    public Item_scalenote() {
     }
 
-    public static Item_note newInstance(String xNote) {
-        Item_note item_note = new Item_note();
+    public static Item_scalenote newInstance(String xNote) {
+        Item_scalenote item_note = new Item_scalenote();
         Bundle bundle = new Bundle();
         bundle.putString("NOTE", xNote);
         item_note.setArguments(bundle);
@@ -43,7 +43,7 @@ public class Item_note extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.item_note, container, false);
+        view = inflater.inflate(R.layout.item_scalenote, container, false);
 
         TextView tvNote = (TextView)view.findViewById(R.id.tvNote);
 

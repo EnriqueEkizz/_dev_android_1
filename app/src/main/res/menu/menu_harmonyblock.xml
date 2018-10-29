@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/harmonyblock_add_note"
-        app:showAsAction="always"
-        app:actionLayout="@layout/menu_harmonyblock"
-        tools:ignore="MenuTitle" />
-    <!--item
-        android:id="@+id/harmonyblock_goup"
-        android:icon="@drawable/ic_go_up"
-        app:showAsAction="always"
-        tools:ignore="MenuTitle" />
-    <item
-        android:id="@+id/harmonyblock_godown"
-        android:icon="@drawable/ic_go_down"
-        app:showAsAction="always"
-        tools:ignore="MenuTitle" />
-    <item
-        android:id="@+id/harmonyblock_delete"
-        android:icon="@drawable/ic_delete"
-        app:showAsAction="always"
-        tools:ignore="MenuTitle" /-->
+        android:icon="@drawable/ic_options"
+        android:title="Options"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/addnote"
+                android:icon="@drawable/ic_note"
+                android:title="add note" />
+            <item
+                android:id="@+id/moveup"
+                android:icon="@drawable/ic_go_up"
+                android:title="move up" />
+            <item
+                android:id="@+id/movedown"
+                android:icon="@drawable/ic_go_down"
+                android:title="move down" />
+            <item
+                android:id="@+id/deleteblock"
+                android:icon="@drawable/ic_delete"
+                android:title="delete" />
+        </menu>
+    </item>
 </menu>

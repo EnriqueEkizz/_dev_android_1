@@ -9,19 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class Item_scalenote extends Fragment {
 
     private View view;
     private String Note;
-    private JSONObject jsonObject;
 
     public Item_scalenote() {
     }
 
-    public static Item_scalenote newInstance(String xNote) {
+    public Item_scalenote newInstance(String xNote) {
         Item_scalenote item_note = new Item_scalenote();
         Bundle bundle = new Bundle();
         bundle.putString("NOTE", xNote);
@@ -32,11 +28,6 @@ public class Item_scalenote extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            jsonObject = new JSONObject(getArguments().getString("NOTE"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         this.Note = getArguments().getString("NOTE");
     }
 

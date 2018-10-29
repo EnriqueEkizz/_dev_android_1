@@ -11,6 +11,5 @@
         android:textColor="@color/font_black_333"
         android:gravity="center"
         android:textStyle="bold"
-        android:textSize="30dp"
-        android:text="as"/>
+        android:textSize="30dp" />
 </LinearLayout>

@@ -39,5 +39,6 @@ public class Item_harmonynote extends Fragment {
 
         tvNote.setText(this.Note);
         return view;
+        //asdfasf
     }
 }

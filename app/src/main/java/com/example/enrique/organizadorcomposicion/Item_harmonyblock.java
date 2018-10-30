@@ -12,14 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class item_harmonyblock extends Fragment {
+public class Item_harmonyblock extends Fragment {
 
     private View view;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     Context context;
 
-    public item_harmonyblock() {
+    public Item_harmonyblock() {
 
     }
 

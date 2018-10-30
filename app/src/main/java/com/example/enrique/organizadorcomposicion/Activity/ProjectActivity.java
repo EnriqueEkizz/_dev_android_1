@@ -15,7 +15,7 @@ import com.example.enrique.organizadorcomposicion.Display_musicalscale;
 import com.example.enrique.organizadorcomposicion.Entities.clsHarmonyBlock;
 import com.example.enrique.organizadorcomposicion.Entities.clsProjectStructure;
 import com.example.enrique.organizadorcomposicion.R;
-import com.example.enrique.organizadorcomposicion.item_harmonyblock;
+import com.example.enrique.organizadorcomposicion.Item_harmonyblock;
 
 public class ProjectActivity extends AppCompatActivity {
 
@@ -62,7 +62,7 @@ public class ProjectActivity extends AppCompatActivity {
                 projectStructure.addHarmonyBlock(new clsHarmonyBlock());
 
                 // CREAR FRAGMENT BLOQUE ARMONICO
-                adapterContentProject.addHarmonyBlock(new item_harmonyblock());
+                adapterContentProject.addHarmonyBlock(new Item_harmonyblock());
                 adapterContentProject.notifyDataSetChanged();
             }
         });

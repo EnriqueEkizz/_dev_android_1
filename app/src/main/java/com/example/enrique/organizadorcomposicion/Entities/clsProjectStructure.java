@@ -4,10 +4,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class clsProjectStructure {
-    private ArrayList<String> Recordings;
-    private ArrayList<clsHarmonyBlock> HarmonyBlocks;
+    private List<String> Recordings;
+    private List<clsHarmonyBlock> HarmonyBlocks;
 
     public clsProjectStructure() {
         this.Recordings = new ArrayList<>();
@@ -25,9 +26,21 @@ public class clsProjectStructure {
         this.HarmonyBlocks.add(xHarmonyBlock);
     }
 
+    public List<clsHarmonyBlock> getAllHarmonyBlock() {
+        return this.HarmonyBlocks;
+    }
+
+    public int getSizeBlocks() {
+        return this.HarmonyBlocks.size();
+    }
+
+    public clsHarmonyBlock getHarmonyBlock(int index) {
+        return this.HarmonyBlocks.get(index);
+    }
+
+
     public void getJsonForSave() {
         JSONObject jsonObject = new JSONObject();
-
 
         try {
             // CONSEGUIR GRABACIONES

@@ -2,7 +2,6 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="10dp"
     android:orientation="vertical">
     <LinearLayout
@@ -13,29 +12,45 @@
             android:id="@+id/toolbarBlock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:layout_marginVertical="10dp">
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
                     <ImageButton
+                        android:id="@+id/btnRec"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_gravity="left"
                         android:src="@drawable/ic_mic"
                         android:background="@color/white"/>
+                    <ImageButton
+                        android:id="@+id/btnPlay"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_play"
+                        android:background="@color/white"/>
+                    <TextView
+                        android:id="@+id/tvNameRecording"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:textColor="@color/font_black_333"
+                        android:textSize="18dp" />
                 </LinearLayout>
                 <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:layout_weight="1">
                     <ImageButton
-                        android:id="@+id/showMenuHarmonyBlock"
+                        android:id="@+id/btnOpenMenu"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@drawable/ic_options"
@@ -43,12 +58,13 @@
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/menu_harmonyblock"
+                android:id="@+id/popupMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:paddingTop="10dp"
                 android:orientation="horizontal"
+                android:background="@color/white"
+                android:animateLayoutChanges="true"
                 android:visibility="gone">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -56,6 +72,7 @@
                     android:layout_weight="1"
                     android:paddingLeft="5dp">
                     <ImageButton
+                        android:id="@+id/btnAddNote"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginHorizontal="5dp"
@@ -81,7 +98,7 @@
                         android:background="@drawable/shape_d"/>
                 </LinearLayout>
                 <ImageButton
-                    android:id="@+id/closeMenuHarmonyBlock"
+                    android:id="@+id/btnCloseMenu"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="right"
@@ -91,11 +108,9 @@
         </RelativeLayout>
         <LinearLayout
             android:id="@+id/frameNotes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="40dp"
             android:orientation="horizontal"
-            android:padding="5dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

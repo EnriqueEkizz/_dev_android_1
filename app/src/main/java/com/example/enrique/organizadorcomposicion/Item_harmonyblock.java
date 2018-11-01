@@ -15,17 +15,9 @@ import android.view.ViewGroup;
 public class Item_harmonyblock extends Fragment {
 
     private View view;
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
-    Context context;
 
     public Item_harmonyblock() {
 
-    }
-
-    public void setContext(Context xContext){
-        this.context = xContext;
-        this.fragmentManager = ((AppCompatActivity)xContext).getSupportFragmentManager();
     }
 
     @Override
@@ -39,12 +31,5 @@ public class Item_harmonyblock extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.item_harmonyblock_2, container,false);
         return view;
-    }
-
-    public void addNoteView(String note) {
-        Item_scalenote itemScalenote = new Item_scalenote().newInstance(note);
-        this.fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.frameNotes, itemScalenote);
-        fragmentTransaction.commit();
     }
 }

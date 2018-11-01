@@ -17,6 +17,9 @@ public class clsHarmonyBlock {
     public void setRecording(String xRecording) {
         this.Recording = xRecording;
     }
+    public String getRecording() {
+        return  this.Recording;
+    }
     public void deleteRecording() {
         this.Recording = "";
     }
@@ -29,6 +32,10 @@ public class clsHarmonyBlock {
     }
     public void updateHarmonyNotes(int index, String xNotes){
         this.HarmonyNotes.set(index, xNotes);
+    }
+
+    public ArrayList<String> getHarmonyNotes() {
+        return HarmonyNotes;
     }
 
     public JSONObject getJsonBlock() {

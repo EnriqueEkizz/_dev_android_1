@@ -2,78 +2,139 @@ package com.example.enrique.organizadorcomposicion;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.view.ActionMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.enrique.organizadorcomposicion.Entities.clsHarmonyBlock;
+import com.example.enrique.organizadorcomposicion.Entities.clsProjectStructure;
+
 import java.util.List;
 
 public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentProject.VHolder> {
 
+    //ID DE PROYECTO PARA CONSULTAR EN BASE DE DATOS
     private Context context;
-    List<Item_harmonyblock> ListHarmonyBlocks;
-    ActionMode actionMode;
+    List<clsHarmonyBlock> ListHarmonyBlocks;
 
-    public AdapterContentProject(Context xContext) {
-        this.context = xContext;
-        ListHarmonyBlocks = new ArrayList<>();
+    ///////////////////// CLASE ViewHolder
+    public class VHolder extends RecyclerView.ViewHolder {
+
+        //Menu
+        public ImageButton btnMenuOpen;
+        public ImageButton btnMenuClose;
+        public LinearLayout popupMenu;
+        public LinearLayout frameNotes;
+        //Opciones de menu
+        public ImageButton btnAddNote;
+        //Detalles de bloque
+        public ImageButton btnRecording;
+        public ImageButton btnPlayRecording;
+        public TextView tvRecordingName;
+
+        public VHolder(@NonNull final View itemView, final Context context) {
+            super(itemView);
+
+            //FRAME PARA NOTA DE CIRCULO ARMONICO
+            frameNotes = itemView.findViewById(R.id.frameNotes);
+            popupMenu = itemView.findViewById(R.id.popupMenu);
+            btnRecording = itemView.findViewById(R.id.btnRec);
+            btnPlayRecording = itemView.findViewById(R.id.btnPlay);
+            tvRecordingName = itemView.findViewById(R.id.tvNameRecording);
+
+            //MENU
+            btnMenuOpen = itemView.findViewById(R.id.btnOpenMenu);
+            btnMenuClose = itemView.findViewById(R.id.btnCloseMenu);
+
+            //OPCIONES DE MENU
+            btnAddNote = itemView.findViewById(R.id.btnAddNote);
+        }
     }
-    public void addHarmonyBlock(Item_harmonyblock harmonyBlock) {
-        //Pasar contexto a bloque armonico
-        harmonyBlock.setContext(this.context);
-        //Agregar bloque armonico a lista
-        this.ListHarmonyBlocks.add(harmonyBlock);
+
+    public AdapterContentProject(Context xContext, clsProjectStructure xProjectStructure) {
+        this.context = xContext;
+        this.ListHarmonyBlocks = xProjectStructure.getAllHarmonyBlock();
+    }
+    public void addHarmonyBlock(clsHarmonyBlock xHarmonyBlock) {
+        this.ListHarmonyBlocks.add(xHarmonyBlock);
+        Log.i("class:", String.valueOf(ListHarmonyBlocks.size()));
     }
 
     @NonNull
     @Override
     public AdapterContentProject.VHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_harmonyblock_3, viewGroup, false);
-        AdapterContentProject.VHolder vHolder = new AdapterContentProject.VHolder(view, context);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_harmonyblock_3, viewGroup, false);
+        AdapterContentProject.VHolder vHolder = new AdapterContentProject.VHolder(view, viewGroup.getContext());
 
         return vHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final VHolder vHolder, int i) {
+    public void onBindViewHolder(@NonNull final AdapterContentProject.VHolder vHolder, int i) {
+        clsHarmonyBlock harmonyBlock = ListHarmonyBlocks.get(i);
+
+        //INSERTAR NOTAS DE CIRUCLO ARMONICO EN BLOQUE
+        for (String note : harmonyBlock.getHarmonyNotes()) {
+            addHarmonyNote(note, context, vHolder.frameNotes);
+            /*Button imgbtn = new Button(context);
+            imgbtn.setTransformationMethod(null);
+            imgbtn.setText(note);
+            imgbtn.setBackgroundColor(ContextCompat.getColor(context,R.color.white));
+            imgbtn.setHeight(50);
+            imgbtn.setWidth(50);
+            vHolder.frameNotes.addView(imgbtn);*/
+        }
+
+        //MOSTRAR / OCULTAR MENU
         vHolder.btnMenuOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vHolder.frameMenu.setVisibility(View.VISIBLE);
+                vHolder.popupMenu.setVisibility(View.VISIBLE);
             }
         });
+
         vHolder.btnMenuClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vHolder.frameMenu.setVisibility(View.GONE);
+                vHolder.popupMenu.setVisibility(View.GONE);
+            }
+        });
+
+        //ESTABLECER NOMBRE DE BLOQUE
+        String recName = harmonyBlock.getRecording();
+        if (recName != "") {
+            vHolder.tvRecordingName.setText(recName);
+            vHolder.btnRecording.setVisibility(View.GONE);
+        } else {
+            vHolder.btnPlayRecording.setVisibility(View.GONE);
+        }
+
+        vHolder.btnAddNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addHarmonyNote("C", context, vHolder.frameNotes);
             }
         });
     }
-
+    private void addHarmonyNote(String xNote, Context xContext, LinearLayout xLinearLayout) {
+        Button imgbtn = new Button(context);
+        imgbtn.setTransformationMethod(null);
+        imgbtn.setText(xNote);
+        imgbtn.setBackgroundColor(ContextCompat.getColor(context,R.color.white));
+        imgbtn.setHeight(50);
+        imgbtn.setWidth(50);
+        xLinearLayout.addView(imgbtn);
+    }
 
     @Override
     public int getItemCount() {
         return ListHarmonyBlocks.size();
-    }
-
-    ///////////////////// CLASE ViewHolder
-    public static class VHolder extends RecyclerView.ViewHolder {
-
-        ImageButton btnMenuOpen;
-        ImageButton btnMenuClose;
-        LinearLayout frameMenu;
-
-        public VHolder(@NonNull final View itemView, final Context context) {
-            super(itemView);
-
-            btnMenuOpen = itemView.findViewById(R.id.showMenuHarmonyBlock);
-            btnMenuClose = itemView.findViewById(R.id.closeMenuHarmonyBlock);
-            frameMenu = itemView.findViewById(R.id.menu_harmonyblock);
-        }
     }
 }

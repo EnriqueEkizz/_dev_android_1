@@ -2,6 +2,7 @@ package com.example.enrique.organizadorcomposicion.Activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -12,9 +13,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.enrique.organizadorcomposicion.AdapterContentProject;
+import com.example.enrique.organizadorcomposicion.Display_buttonscale;
 import com.example.enrique.organizadorcomposicion.Display_musicalscale;
 import com.example.enrique.organizadorcomposicion.Entities.clsHarmonyBlock;
 import com.example.enrique.organizadorcomposicion.Entities.clsProjectStructure;
@@ -71,15 +74,18 @@ public class ProjectActivity extends AppCompatActivity {
         //ESCALA MUSICAL DE PROYECTO
         FragmentManager frgManager = getSupportFragmentManager();
         FragmentTransaction frgTransaction = frgManager.beginTransaction();
-        Display_musicalscale frgMusicalScale = new Display_musicalscale().newInstance("C");
-        frgTransaction.add(R.id.frameSpaceMusicalScale, frgMusicalScale);
+
+        //frgTransaction.add(R.id.frameSpaceMusicalScale, new Display_musicalscale().newInstance("C"));
+
+        //BOTON MOSTRAR ACTIVIDAD IDENTIFICAR ESCALA
+        frgTransaction.add(R.id.frameSpaceMusicalScale, new Display_buttonscale());
         frgTransaction.commit();
 
         //ADAPTADOR RECYCLERVIEW
         createAdapterForProject(projectStructure);
 
         //FLOATING ACTION BUTTON
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabOptionB);
+        FloatingActionButton fab = findViewById(R.id.fabOptionB);
         fab.setOnClickListener(new View.OnClickListener() {
             // AGREGAR NUEVO BLOQUE DE CIRCULO ARMONICO
             @Override
@@ -90,6 +96,8 @@ public class ProjectActivity extends AppCompatActivity {
                 createAdapterForProject(projectStructure);
             }
         });
+
+
     }
 
     private void createAdapterForProject(clsProjectStructure xClsProjectStructure) {

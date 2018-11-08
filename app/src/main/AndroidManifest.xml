@@ -23,11 +23,15 @@
         </activity>
         <activity
             android:name=".Activity.RecordActivity"
-            android:parentActivityName=".Activity.MainActivity"></activity>
+            android:parentActivityName=".Activity.MainActivity" />
         <activity
             android:name=".Activity.ProjectActivity"
             android:label="@string/title_activity_project"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ScaleActivity"
+            android:label="@string/title_activity_scale"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

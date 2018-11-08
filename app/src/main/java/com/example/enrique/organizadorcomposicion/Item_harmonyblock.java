@@ -29,7 +29,7 @@ public class Item_harmonyblock extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.item_harmonyblock_2, container,false);
+        view = inflater.inflate(R.layout.item_harmonyblock_3, container,false);
         return view;
     }
 }

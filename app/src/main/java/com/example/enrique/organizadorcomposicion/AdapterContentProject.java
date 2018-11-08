@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,7 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
         public ImageButton btnPlayRecording;
         public TextView tvRecordingName;
 
-        public VHolder(@NonNull final View itemView, final Context context) {
+        public VHolder(@NonNull final View itemView) {
             super(itemView);
 
             //FRAME PARA NOTA DE CIRCULO ARMONICO
@@ -64,14 +63,13 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
     }
     public void addHarmonyBlock(clsHarmonyBlock xHarmonyBlock) {
         this.ListHarmonyBlocks.add(xHarmonyBlock);
-        Log.i("class:", String.valueOf(ListHarmonyBlocks.size()));
     }
 
     @NonNull
     @Override
     public AdapterContentProject.VHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_harmonyblock_3, viewGroup, false);
-        AdapterContentProject.VHolder vHolder = new AdapterContentProject.VHolder(view, viewGroup.getContext());
+        AdapterContentProject.VHolder vHolder = new AdapterContentProject.VHolder(view);
 
         return vHolder;
     }
@@ -80,16 +78,9 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
     public void onBindViewHolder(@NonNull final AdapterContentProject.VHolder vHolder, int i) {
         clsHarmonyBlock harmonyBlock = ListHarmonyBlocks.get(i);
 
-        //INSERTAR NOTAS DE CIRUCLO ARMONICO EN BLOQUE
+        //INSERTAR NOTAS DE CIRUCLO ARMONICO EN BLOQUE INICIALES
         for (String note : harmonyBlock.getHarmonyNotes()) {
             addHarmonyNote(note, context, vHolder.frameNotes);
-            /*Button imgbtn = new Button(context);
-            imgbtn.setTransformationMethod(null);
-            imgbtn.setText(note);
-            imgbtn.setBackgroundColor(ContextCompat.getColor(context,R.color.white));
-            imgbtn.setHeight(50);
-            imgbtn.setWidth(50);
-            vHolder.frameNotes.addView(imgbtn);*/
         }
 
         //MOSTRAR / OCULTAR MENU
@@ -116,6 +107,7 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
             vHolder.btnPlayRecording.setVisibility(View.GONE);
         }
 
+        //AGREGAR NOTA DE CIRCULO ARMONICO
         vHolder.btnAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

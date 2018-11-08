@@ -7,12 +7,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class  PageAdapter_sources extends FragmentPagerAdapter {
+public class PageAdapter_scale extends FragmentPagerAdapter {
 
-    private final static byte TOTAL_PAGES = 2;
+    private final static byte TOTAL_PAGES = 1;
     private final List<Fragment> lstPages = new ArrayList<>();
 
-    public PageAdapter_sources(FragmentManager fm) {
+    public PageAdapter_scale(FragmentManager fm) {
         super(fm);
     }
 

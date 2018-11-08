@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 public class list_recorded extends Fragment {
-    private static String pathRecorded;
+    //private static String pathRecorded;
     View view;
     private RecyclerView recyclerView;
     private List<clsItemRecording> lstData;

@@ -122,6 +122,7 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
         imgbtn.setBackgroundColor(ContextCompat.getColor(context,R.color.white));
         imgbtn.setHeight(50);
         imgbtn.setWidth(50);
+        imgbtn.setTextSize(18);
         xLinearLayout.addView(imgbtn);
     }
 

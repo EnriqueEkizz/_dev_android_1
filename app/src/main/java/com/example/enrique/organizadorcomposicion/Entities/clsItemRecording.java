@@ -5,6 +5,7 @@ public class clsItemRecording{
     private String fechacreacion;
     private String duracion;
     private String path;
+    private boolean playing;
 
     public clsItemRecording() {
     }
@@ -14,6 +15,7 @@ public class clsItemRecording{
         this.fechacreacion = fechacreacion;
         this.duracion = duracion;
         this.path = path;
+        this.playing = false;
     }
 
     public String getTitulo() {
@@ -46,5 +48,15 @@ public class clsItemRecording{
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public void play() {
+        this.playing = true;
+    }
+    public void stop() {
+        this.playing = false;
+    }
+    public boolean isPlaying() {
+        return this.playing;
     }
 }

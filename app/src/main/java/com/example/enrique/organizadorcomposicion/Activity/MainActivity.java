@@ -2,6 +2,7 @@ package com.example.enrique.organizadorcomposicion.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
@@ -38,8 +39,9 @@ public class MainActivity extends FragmentActivity{
         /* Cargando listas en pageAdapter*/
         pageAdapter_sources.addPageList(list_recorded.newInstance(pathExternalStorageRecording));
         pageAdapter_sources.addPageList(new list_project());
-
+        /*ESTABLECIENDO ADAPTER DE VIEWPAGER*/
         viewPager.setAdapter(pageAdapter_sources);
+
         //ESTABLECER ICONO DE FLOATING ACTION BUTTON AL MOVER ENTRE TABS
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -69,7 +71,7 @@ public class MainActivity extends FragmentActivity{
         fabActividadA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tabRecording) {
+                if (tabRecording) { // ACTIVIDAD DE GRABACION
                     Intent intent = new Intent(MainActivity.this, RecordActivity.class);
                     startActivity(intent);
                 } else {

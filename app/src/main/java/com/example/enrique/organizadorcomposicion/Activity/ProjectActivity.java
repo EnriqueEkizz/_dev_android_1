@@ -1,8 +1,10 @@
 package com.example.enrique.organizadorcomposicion.Activity;
 
+import android.animation.LayoutTransition;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -40,25 +43,19 @@ public class ProjectActivity extends AppCompatActivity {
         projectStructure = new clsProjectStructure();
 
         //CARGAR DATOS DE PROYECTO (Pruebas)
-        // bloque 1: Grabacion + 4 notas
         clsHarmonyBlock block1 =  new clsHarmonyBlock();
             block1.setRecording("Grabacion1");
             block1.addHarmonyNotes("D#");
             block1.addHarmonyNotes("Fm");
             block1.addHarmonyNotes("Gm");
             block1.addHarmonyNotes("G#");
-        // bloque 2: sin grabacion + 3 notas
         clsHarmonyBlock block2 =  new clsHarmonyBlock();
             block2.setRecording("");
             block2.addHarmonyNotes("G#");
             block2.addHarmonyNotes("Cm");
             block2.addHarmonyNotes("Dm");
-        // bloque 2: sin grabacion + 3 notas
         clsHarmonyBlock block3 =  new clsHarmonyBlock();
             block3.setRecording("Grabación2");
-            block3.addHarmonyNotes("A");
-            block3.addHarmonyNotes("Am");
-            block3.addHarmonyNotes("Cm");
         projectStructure.addHarmonyBlock(block1);
         projectStructure.addHarmonyBlock(block2);
         projectStructure.addHarmonyBlock(block3);

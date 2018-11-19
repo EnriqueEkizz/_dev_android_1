@@ -1,8 +1,6 @@
 package com.example.enrique.organizadorcomposicion.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
@@ -12,8 +10,8 @@ import android.view.View;
 
 import com.example.enrique.organizadorcomposicion.PageAdapter_sources;
 import com.example.enrique.organizadorcomposicion.R;
-import com.example.enrique.organizadorcomposicion.list_project;
-import com.example.enrique.organizadorcomposicion.list_recorded;
+import com.example.enrique.organizadorcomposicion.List_project;
+import com.example.enrique.organizadorcomposicion.List_recorded;
 
 public class MainActivity extends FragmentActivity{
 
@@ -22,6 +20,7 @@ public class MainActivity extends FragmentActivity{
     private PageAdapter_sources pageAdapter_sources;
     private FloatingActionButton fabActividadA;
     private static boolean tabRecording = true;
+    private List_project listProject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +36,9 @@ public class MainActivity extends FragmentActivity{
         /* Path de directorio de grabaciones*/
         String pathExternalStorageRecording = getExternalFilesDir("Recordings").toString();
         /* Cargando listas en pageAdapter*/
-        pageAdapter_sources.addPageList(list_recorded.newInstance(pathExternalStorageRecording));
-        pageAdapter_sources.addPageList(new list_project());
+        pageAdapter_sources.addPageList(List_recorded.newInstance(pathExternalStorageRecording));
+        listProject = new List_project();
+        pageAdapter_sources.addPageList(listProject);
         /*ESTABLECIENDO ADAPTER DE VIEWPAGER*/
         viewPager.setAdapter(pageAdapter_sources);
 
@@ -75,7 +75,7 @@ public class MainActivity extends FragmentActivity{
                     Intent intent = new Intent(MainActivity.this, RecordActivity.class);
                     startActivity(intent);
                 } else {
-
+                    listProject.addEmptyItemProject();
                 }
             }
         });

@@ -14,12 +14,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.enrique.organizadorcomposicion.AdapterContentProject;
+import com.example.enrique.organizadorcomposicion.Data.DatabaseHelper;
+import com.example.enrique.organizadorcomposicion.Data.clsDataProjects;
 import com.example.enrique.organizadorcomposicion.Display_buttonscale;
 import com.example.enrique.organizadorcomposicion.Display_musicalscale;
 import com.example.enrique.organizadorcomposicion.Entities.clsHarmonyBlock;
@@ -27,59 +30,29 @@ import com.example.enrique.organizadorcomposicion.Entities.clsProjectStructure;
 import com.example.enrique.organizadorcomposicion.R;
 import com.example.enrique.organizadorcomposicion.Item_harmonyblock;
 
-public class ProjectActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class ProjectActivity extends AppCompatActivity {
     // CLASE PRINCIPAL DE LA ESTRUCTURA DEL PROYECTO
     private String idProject;
-    clsProjectStructure projectStructure;
-    RecyclerView recyclerView;
+    private clsProjectStructure projectStructure;
+    private RecyclerView recyclerView;
+    private DatabaseHelper dataHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project);
 
+        dataHelper = new DatabaseHelper(this);
+
         //SETEAR CLASE DE ESTRUCTURA DE PROYECTO CON INTENT
-        projectStructure = new clsProjectStructure();
-
-        //CARGAR DATOS DE PROYECTO (Pruebas)
-        clsHarmonyBlock block1 =  new clsHarmonyBlock();
-            block1.setRecording("Grabacion1");
-            block1.addHarmonyNotes("D#");
-            block1.addHarmonyNotes("Fm");
-            block1.addHarmonyNotes("Gm");
-            block1.addHarmonyNotes("G#");
-        clsHarmonyBlock block2 =  new clsHarmonyBlock();
-            block2.setRecording("");
-            block2.addHarmonyNotes("G#");
-            block2.addHarmonyNotes("Cm");
-            block2.addHarmonyNotes("Dm");
-        clsHarmonyBlock block3 =  new clsHarmonyBlock();
-            block3.setRecording("Grabación2");
-        projectStructure.addHarmonyBlock(block1);
-        projectStructure.addHarmonyBlock(block2);
-        projectStructure.addHarmonyBlock(block3);
-
-        //RECYCLERVIEW
-        recyclerView = this.findViewById(R.id.rvListContentProject);
+        projectStructure = getProjectStructureFromDatabase(Integer.parseInt(getIntent().getStringExtra("ID_PROJECT")));
 
         //TOOLBAR
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Proyecto1");
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(projectStructure.getName());
         setSupportActionBar(toolbar);
-
-        //ESCALA MUSICAL DE PROYECTO
-        FragmentManager frgManager = getSupportFragmentManager();
-        FragmentTransaction frgTransaction = frgManager.beginTransaction();
-
-        //frgTransaction.add(R.id.frameSpaceMusicalScale, new Display_musicalscale().newInstance("C"));
-
-        //BOTON MOSTRAR ACTIVIDAD IDENTIFICAR ESCALA
-        frgTransaction.add(R.id.frameSpaceMusicalScale, new Display_buttonscale());
-        frgTransaction.commit();
-
-        //ADAPTADOR RECYCLERVIEW
-        createAdapterForProject(projectStructure);
 
         //FLOATING ACTION BUTTON
         FloatingActionButton fab = findViewById(R.id.fabOptionB);
@@ -94,13 +67,42 @@ public class ProjectActivity extends AppCompatActivity {
             }
         });
 
+        //ESCALA MUSICAL DE PROYECTO
+        FragmentManager frgManager = getSupportFragmentManager();
+        FragmentTransaction frgTransaction = frgManager.beginTransaction();
+        if (projectStructure.getScale() != "") {
+            // DESPLEGAR ESCALA
+            frgTransaction.add(R.id.frameSpaceMusicalScale, new Display_musicalscale().newInstance("C"));
+        } else {
+            //BOTON MOSTRAR ACTIVIDAD IDENTIFICAR ESCALA
+            frgTransaction.add(R.id.frameSpaceMusicalScale, new Display_buttonscale());
+        }
+        frgTransaction.commit();
 
+        //RECYCLERVIEW
+        recyclerView = this.findViewById(R.id.rvListContentProject);
+        //ADAPTADOR RECYCLERVIEW
+        createAdapterForProject(projectStructure);
     }
-
     private void createAdapterForProject(clsProjectStructure xClsProjectStructure) {
         recyclerView.setAdapter(null);
         AdapterContentProject adapterContentProject = new AdapterContentProject(this, xClsProjectStructure);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapterContentProject);
+    }
+    /////////////////////////////////////////////////////
+    // READ data project FROM database
+    private clsProjectStructure getProjectStructureFromDatabase(int id_project) {
+        clsProjectStructure structure = new clsProjectStructure();
+        // READ row about id_project FROM database
+        clsDataProjects dataProjects = dataHelper.getFullProject(id_project);
+        // SET project structure
+        // id
+        structure.setIdDatabase(dataProjects.getId());
+        // details
+        structure.setDataDetailsProject(dataProjects.getDetails());
+        // content
+        structure.setDataContentProject(dataProjects.getContent());
+        return structure;
     }
 }

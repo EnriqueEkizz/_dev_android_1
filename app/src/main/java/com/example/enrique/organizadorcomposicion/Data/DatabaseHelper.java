@@ -3,11 +3,8 @@ package com.example.enrique.organizadorcomposicion.Data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -44,13 +41,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // creating required tables
-        db.execSQL(TABLE_PROJECTS);
+        db.execSQL(CREATE_TABLE_PROJECTS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // on upgrade drop older tables
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROJECTS);
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_PROJECTS);
 
         // create new tables
         onCreate(db);
@@ -99,6 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         clsDataProjects projects = new clsDataProjects();
         projects.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
         projects.setDetails(cursor.getString(cursor.getColumnIndex(KEY_DETAILS)));
+        projects.setContent(cursor.getString(cursor.getColumnIndex(KEY_CONTENT)));
 
         return projects;
     }

@@ -19,20 +19,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class list_recorded extends Fragment {
+public class List_recorded extends Fragment {
     //private static String pathRecorded;
     View view;
     private RecyclerView recyclerView;
     private List<clsItemRecording> lstData;
 
     // CONSTRUCTOR
-    public list_recorded() {
+    public List_recorded() {
 
     }
 
     // RECIBIR PATH DE LISTA DE GRABACIONES
-    public static list_recorded newInstance(String path) {
-        list_recorded list = new list_recorded();
+    public static List_recorded newInstance(String path) {
+        List_recorded list = new List_recorded();
 
         Bundle bundle = new Bundle();
         bundle.putString("Path", path);

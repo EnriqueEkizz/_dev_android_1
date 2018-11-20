@@ -55,17 +55,4 @@ public class clsItemProject {
         }
         return "err";
     }
-    public String getEmptyContent() {
-        try{
-            JSONObject contentProject = new JSONObject();
-            contentProject.put("SCALE","");
-            contentProject.put("RECORDINGS", "");
-            contentProject.put("HARMONYBLOCKS", "");
-
-            return contentProject.toString();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return "err";
-    }
 }

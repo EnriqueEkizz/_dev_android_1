@@ -1,7 +1,7 @@
 package com.example.enrique.organizadorcomposicion.Data;
 
 public class clsDataProjects {
-    int id;
+    long id;
     String details;
     String content;
 
@@ -13,9 +13,14 @@ public class clsDataProjects {
         this.details = details;
         this.content = content;
     }
+    public clsDataProjects(long id, String details, String content) {
+        this.id = id;
+        this.details = details;
+        this.content = content;
+    }
 
     // GET
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -28,7 +33,7 @@ public class clsDataProjects {
     }
 
     // SET
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

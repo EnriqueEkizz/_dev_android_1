@@ -59,7 +59,7 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
 
     public AdapterContentProject(Context xContext, clsProjectStructure xProjectStructure) {
         this.context = xContext;
-        this.ListHarmonyBlocks = xProjectStructure.getAllHarmonyBlock();
+        this.ListHarmonyBlocks = xProjectStructure.getContent().getAllHarmonyBlock();
     }
     public void addHarmonyBlock(clsHarmonyBlock xHarmonyBlock) {
         this.ListHarmonyBlocks.add(xHarmonyBlock);
@@ -99,9 +99,8 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
         });
 
         //ESTABLECER NOMBRE DE BLOQUE
-        String recName = harmonyBlock.getRecording();
-        if (recName != "") {
-            vHolder.tvRecordingName.setText(recName);
+        if (harmonyBlock.getRecording().length() != 0) {
+            vHolder.tvRecordingName.setText(harmonyBlock.getRecording());
             vHolder.btnRecording.setVisibility(View.GONE);
         } else {
             vHolder.btnPlayRecording.setVisibility(View.GONE);

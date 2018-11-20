@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 public class ProjectActivity extends AppCompatActivity {
     // CLASE PRINCIPAL DE LA ESTRUCTURA DEL PROYECTO
-    private String idProject;
+    //private String idProject;
     private clsProjectStructure projectStructure;
     private RecyclerView recyclerView;
     private DatabaseHelper dataHelper;
@@ -51,7 +51,7 @@ public class ProjectActivity extends AppCompatActivity {
 
         //TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(projectStructure.getName());
+        toolbar.setTitle(projectStructure.getDetails().getTitle());
         setSupportActionBar(toolbar);
 
         //FLOATING ACTION BUTTON
@@ -60,8 +60,8 @@ public class ProjectActivity extends AppCompatActivity {
             // AGREGAR NUEVO BLOQUE DE CIRCULO ARMONICO
             @Override
             public void onClick(View view) {
-                // CREAR FRAGMENT BLOQUE ARMONICO
-                projectStructure.addHarmonyBlock(new clsHarmonyBlock());
+                // ADD harmonyblock class TO projectstructure
+                projectStructure.getContent().addHarmonyBlock(new clsHarmonyBlock());
                 // REBUILD ADAPTADOR DE RECYCLERVIEW
                 createAdapterForProject(projectStructure);
             }
@@ -70,7 +70,7 @@ public class ProjectActivity extends AppCompatActivity {
         //ESCALA MUSICAL DE PROYECTO
         FragmentManager frgManager = getSupportFragmentManager();
         FragmentTransaction frgTransaction = frgManager.beginTransaction();
-        if (projectStructure.getScale() != "") {
+        if (projectStructure.getContent().getScale().length() != 0) {
             // DESPLEGAR ESCALA
             frgTransaction.add(R.id.frameSpaceMusicalScale, new Display_musicalscale().newInstance("C"));
         } else {
@@ -84,6 +84,18 @@ public class ProjectActivity extends AppCompatActivity {
         //ADAPTADOR RECYCLERVIEW
         createAdapterForProject(projectStructure);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("DETAILS: ", String.valueOf(projectStructure.getIdProject()));
+        Log.i("DETAILS: ", projectStructure.getDetails().getJsonDetails());
+        Log.i("CONTENT: ", projectStructure.getContent().getJsonContent());
+
+        dataHelper.updateProject(new clsDataProjects(projectStructure.getIdProject(), projectStructure.getDetails().getJsonDetails(), projectStructure.getContent().getJsonContent()));
+        dataHelper.closeDB();
+    }
+
     private void createAdapterForProject(clsProjectStructure xClsProjectStructure) {
         recyclerView.setAdapter(null);
         AdapterContentProject adapterContentProject = new AdapterContentProject(this, xClsProjectStructure);
@@ -98,11 +110,13 @@ public class ProjectActivity extends AppCompatActivity {
         clsDataProjects dataProjects = dataHelper.getFullProject(id_project);
         // SET project structure
         // id
-        structure.setIdDatabase(dataProjects.getId());
+        structure.setIdProject(dataProjects.getId());
         // details
-        structure.setDataDetailsProject(dataProjects.getDetails());
+        structure.getDetails().setDetailsData(dataProjects.getDetails());
         // content
-        structure.setDataContentProject(dataProjects.getContent());
+        structure.getContent().setContentData(dataProjects.getContent());
         return structure;
     }
+
+
 }

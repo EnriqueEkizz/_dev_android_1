@@ -47,7 +47,7 @@ public class clsHarmonyBlock {
                 arrayNotes.put(notes);
             }
             
-            jsonObject.put("RECORD", Recording);
+            jsonObject.put("RECORDING", this.Recording);
             jsonObject.put("NOTES", arrayNotes);
         } catch (JSONException e) {
             e.printStackTrace();

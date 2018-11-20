@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import com.example.enrique.organizadorcomposicion.Data.DatabaseHelper;
 import com.example.enrique.organizadorcomposicion.Data.clsDataProjects;
 import com.example.enrique.organizadorcomposicion.Entities.clsItemProject;
+import com.example.enrique.organizadorcomposicion.Entities.clsProjectStructure;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -90,7 +92,7 @@ public class List_project extends Fragment{
         clsDataProjects dataProjects = new clsDataProjects();
         //getting json string from item project
         dataProjects.setDetails(itemProject.getDetailsJson());
-        dataProjects.setContent(itemProject.getEmptyContent());
+        dataProjects.setContent(new clsProjectStructure().getContent().getJsonEmptyContent());
         request_id = dataHelper.createProject(dataProjects);
         dataHelper.closeDB();
         return request_id;

@@ -125,6 +125,9 @@ public class clsProjectStructure {
         public void addHarmonyBlock(clsHarmonyBlock xHarmonyBlock) {
             this.HarmonyBlocks.add(xHarmonyBlock);
         }
+        public void setHarmonyBlockRecordings(int index, String path) {
+            HarmonyBlocks.get(index).setRecording(path);
+        }
         // METHODS GET
         public List<clsHarmonyBlock> getAllHarmonyBlock() {
             return this.HarmonyBlocks;
@@ -156,9 +159,10 @@ public class clsProjectStructure {
             try{
                 JSONObject contentProject = new JSONObject();
                 contentProject.put("SCALE","");
-                contentProject.put("RECORDINGS", "");
-                contentProject.put("HARMONYBLOCKS", "");
+                contentProject.put("RECORDINGS", new JSONArray());
+                contentProject.put("HARMONYBLOCKS", new JSONArray());
 
+                Log.i("STRINGO: ", contentProject.toString());
                 return contentProject.toString();
             } catch (Exception e){
                 e.printStackTrace();

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -30,6 +31,7 @@ import com.example.enrique.organizadorcomposicion.Entities.clsProjectStructure;
 import com.example.enrique.organizadorcomposicion.R;
 import com.example.enrique.organizadorcomposicion.Item_harmonyblock;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class ProjectActivity extends AppCompatActivity {
@@ -38,6 +40,7 @@ public class ProjectActivity extends AppCompatActivity {
     private clsProjectStructure projectStructure;
     private RecyclerView recyclerView;
     private DatabaseHelper dataHelper;
+    private int REQUEST_CODE = 12;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,9 +99,23 @@ public class ProjectActivity extends AppCompatActivity {
         dataHelper.closeDB();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE){
+            if (resultCode == RESULT_OK) {
+                String path = data.getStringExtra("PATH");
+                int index = data.getIntExtra("CALL_INDEX", 0);
+                projectStructure.getContent().setHarmonyBlockRecordings(index, data.getStringExtra("NAME"));
+                // REBUILD ADAPTADOR DE RECYCLERVIEW
+                createAdapterForProject(projectStructure);
+            }
+        }
+    }
+
     private void createAdapterForProject(clsProjectStructure xClsProjectStructure) {
         recyclerView.setAdapter(null);
-        AdapterContentProject adapterContentProject = new AdapterContentProject(this, xClsProjectStructure);
+        AdapterContentProject adapterContentProject = new AdapterContentProject(this, xClsProjectStructure, REQUEST_CODE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapterContentProject);
     }

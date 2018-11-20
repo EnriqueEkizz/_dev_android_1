@@ -1,6 +1,10 @@
 package com.example.enrique.organizadorcomposicion.Activity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +27,7 @@ public class RecordActivity extends AppCompatActivity {
 
     private MediaRecorder myAudioRecorder;
     private String outputFile;
+    private String nameRecording;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +67,8 @@ public class RecordActivity extends AppCompatActivity {
         DateFormat df = new SimpleDateFormat("ddMMyyyy_HHmmss");
         String date = df.format(Calendar.getInstance().getTime());
 
-        outputFile = getExternalFilesDir("Recordings") + "/" + date + ".m4a";
+        nameRecording = date + ".m4a";
+        outputFile = getExternalFilesDir("Recordings") + "/" + nameRecording;
         myAudioRecorder = new MediaRecorder();
         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
@@ -82,11 +88,25 @@ public class RecordActivity extends AppCompatActivity {
     }
     private void stopRecording() {
         myAudioRecorder.stop();
+
+        //CALCULANDO DURACION
+        Uri uri = Uri.parse(outputFile);
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(this.getBaseContext(), uri);
+        String duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+
+        Toast.makeText(getApplicationContext(), "Audio Recorder successfully", Toast.LENGTH_LONG).show();
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("PATH", outputFile);
+        returnIntent.putExtra("NAME", nameRecording);
+        returnIntent.putExtra("DURATION", duration);
+        returnIntent.putExtra("CALL_INDEX", getIntent().getIntExtra("CALL_INDEX",0));
+        setResult(RESULT_OK, returnIntent);
+
         myAudioRecorder.release();
         myAudioRecorder = null;
         flagRecording = false;
-
-        Toast.makeText(getApplicationContext(), "Audio Recorder successfully", Toast.LENGTH_LONG).show();
+        finish();
     }
     private void resetRecording() {
         myAudioRecorder.reset();

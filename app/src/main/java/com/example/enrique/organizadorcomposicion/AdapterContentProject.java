@@ -3,9 +3,11 @@ package com.example.enrique.organizadorcomposicion;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +21,19 @@ import com.example.enrique.organizadorcomposicion.Activity.RecordActivity;
 import com.example.enrique.organizadorcomposicion.Entities.clsHarmonyBlock;
 import com.example.enrique.organizadorcomposicion.Entities.clsProjectStructure;
 
+import java.io.IOException;
 import java.util.List;
 
 public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentProject.VHolder> {
 
     //ID DE PROYECTO PARA CONSULTAR EN BASE DE DATOS
+    //Id project
+    long ID;
     private Context context;
     List<clsHarmonyBlock> ListHarmonyBlocks;
     private int CODE;
+    private MediaPlayer mediaPlayer;
+    private int lastPosition = -1;
 
     ///////////////////// CLASE ViewHolder
     public class VHolder extends RecyclerView.ViewHolder {
@@ -62,8 +69,10 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
 
     public AdapterContentProject(Context xContext, clsProjectStructure xProjectStructure, int xCodeRequest) {
         this.context = xContext;
+        this.ID = xProjectStructure.getIdProject();
         this.ListHarmonyBlocks = xProjectStructure.getContent().getAllHarmonyBlock();
         this.CODE = xCodeRequest;
+        mediaPlayer = new MediaPlayer();
     }
     public void addHarmonyBlock(clsHarmonyBlock xHarmonyBlock) {
         this.ListHarmonyBlocks.add(xHarmonyBlock);
@@ -106,21 +115,42 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
         } else {
             vHolder.btnPlayRecording.setVisibility(View.GONE);
         }
+        // PLAY / PAUSE
+        if (harmonyBlock.isPlaying()) {
+            vHolder.btnPlayRecording.setImageResource(R.drawable.ic_pause_white);
+        } else {
+            vHolder.btnPlayRecording.setImageResource(R.drawable.ic_play_white);
+        }
         // AGREGAR GRABACION EN CIRCULO ARMONICO
         vHolder.btnAddRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, RecordActivity.class);
+                intent.putExtra("ID_PROJECT", ID);
                 intent.putExtra("CALL_INDEX", vHolder.getAdapterPosition());
+
                 ((Activity) context).startActivityForResult(intent, CODE);
             }
         });
-
         // AGREGAR NOTA DE CIRCULO ARMONICO
         vHolder.btnAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addHarmonyNote("C", context, vHolder.frameNotes, true, vHolder.getAdapterPosition());
+            }
+        });
+        //REPRODUCIR AUDIO
+        vHolder.btnPlayRecording.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playRecorded(vHolder.getAdapterPosition());
+            }
+        });
+        //AL FINALIZAR REPRODUCCION
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                stopMedia(lastPosition);
             }
         });
     }
@@ -141,5 +171,48 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
     @Override
     public int getItemCount() {
         return ListHarmonyBlocks.size();
+    }
+
+    //ADMINISTRAR REPRODUCCION
+    private void playRecorded(int position) {
+        if (lastPosition < 0) {
+            startMedia(position);
+        } else if (lastPosition != position) {
+            stopMedia(lastPosition);
+            startMedia(position);
+        } else {
+            pauseMedia(position);
+        }
+        lastPosition = position;
+    }
+    //START
+    private void startMedia(int p) {
+        try{
+            mediaPlayer.setDataSource(ListHarmonyBlocks.get(p).getPathRecording());
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+            ListHarmonyBlocks.get(p).play();
+            notifyDataSetChanged();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //PAUSE
+    private void pauseMedia(int p) {
+        if (ListHarmonyBlocks.get(p).isPlaying()) {
+            ListHarmonyBlocks.get(p).stop();
+            mediaPlayer.pause();
+        } else {
+            ListHarmonyBlocks.get(p).play();
+            mediaPlayer.start();
+        }
+        notifyDataSetChanged();
+    }
+    //STOP
+    private void stopMedia(int p) {
+        mediaPlayer.reset();
+        lastPosition = -1;
+        ListHarmonyBlocks.get(p).stop();
+        notifyDataSetChanged();
     }
 }

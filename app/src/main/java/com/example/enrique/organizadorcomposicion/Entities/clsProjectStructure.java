@@ -97,7 +97,6 @@ public class clsProjectStructure {
                 this.Scale = main.getString("SCALE");
                 // SET recordings ON project
                 JSONArray arrGetting = main.getJSONArray("RECORDINGS");
-                //arrRecs = main.getJSONArray("RECORDINGS");
                 if (arrGetting != null) {
                     for (int i = 0; i < arrGetting.length(); i++) {
                         this.Recordings.add(arrGetting.getString(i));
@@ -111,6 +110,7 @@ public class clsProjectStructure {
 
                     JSONObject obj = arrGetting.getJSONObject(i);
                     harmonyBlock.setRecording(obj.getString("RECORDING"));
+                    harmonyBlock.setPathRecording(obj.getString("RECORDINGPATH"));
                     JSONArray arrNotes = obj.getJSONArray("NOTES");
                     for (int j = 0; j < arrNotes.length(); j++) {
                         harmonyBlock.addHarmonyNotes(arrNotes.getString(j));
@@ -125,8 +125,11 @@ public class clsProjectStructure {
         public void addHarmonyBlock(clsHarmonyBlock xHarmonyBlock) {
             this.HarmonyBlocks.add(xHarmonyBlock);
         }
-        public void setHarmonyBlockRecordings(int index, String path) {
+        public void setHarmonyBlockRecordingName(int index, String path) {
             HarmonyBlocks.get(index).setRecording(path);
+        }
+        public void setHarmonyBlockRecordingPath(int index, String path) {
+            HarmonyBlocks.get(index).setPathRecording(path);
         }
         // METHODS GET
         public List<clsHarmonyBlock> getAllHarmonyBlock() {

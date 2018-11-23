@@ -1,10 +1,6 @@
 package com.example.enrique.organizadorcomposicion.Activity;
 
-import android.animation.LayoutTransition;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,12 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.example.enrique.organizadorcomposicion.AdapterContentProject;
 import com.example.enrique.organizadorcomposicion.Data.DatabaseHelper;
@@ -29,14 +21,9 @@ import com.example.enrique.organizadorcomposicion.Display_musicalscale;
 import com.example.enrique.organizadorcomposicion.Entities.clsHarmonyBlock;
 import com.example.enrique.organizadorcomposicion.Entities.clsProjectStructure;
 import com.example.enrique.organizadorcomposicion.R;
-import com.example.enrique.organizadorcomposicion.Item_harmonyblock;
-
-import java.io.File;
-import java.util.ArrayList;
 
 public class ProjectActivity extends AppCompatActivity {
     // CLASE PRINCIPAL DE LA ESTRUCTURA DEL PROYECTO
-    //private String idProject;
     private clsProjectStructure projectStructure;
     private RecyclerView recyclerView;
     private DatabaseHelper dataHelper;
@@ -104,9 +91,9 @@ public class ProjectActivity extends AppCompatActivity {
         //super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE){
             if (resultCode == RESULT_OK) {
-                String path = data.getStringExtra("PATH");
                 int index = data.getIntExtra("CALL_INDEX", 0);
-                projectStructure.getContent().setHarmonyBlockRecordings(index, data.getStringExtra("NAME"));
+                projectStructure.getContent().setHarmonyBlockRecordingName(index, data.getStringExtra("NAME"));
+                projectStructure.getContent().setHarmonyBlockRecordingPath(index, data.getStringExtra("PATH"));
                 // REBUILD ADAPTADOR DE RECYCLERVIEW
                 createAdapterForProject(projectStructure);
             }

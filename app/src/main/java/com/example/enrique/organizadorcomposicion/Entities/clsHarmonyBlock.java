@@ -8,10 +8,13 @@ import java.util.ArrayList;
 
 public class clsHarmonyBlock {
     private String Recording = "";
+    private String pathRecording = "";
     private ArrayList<String> HarmonyNotes;
+    private boolean playing;
 
     public clsHarmonyBlock() {
         this.HarmonyNotes = new ArrayList<>();
+        this.playing = false;
     }
 
     public void setRecording(String xRecording) {
@@ -34,6 +37,14 @@ public class clsHarmonyBlock {
         this.HarmonyNotes.set(index, xNotes);
     }
 
+    public String getPathRecording() {
+        return pathRecording;
+    }
+
+    public void setPathRecording(String pathRecording) {
+        this.pathRecording = pathRecording;
+    }
+
     public ArrayList<String> getHarmonyNotes() {
         return HarmonyNotes;
     }
@@ -46,13 +57,22 @@ public class clsHarmonyBlock {
             for (String notes : HarmonyNotes) {
                 arrayNotes.put(notes);
             }
-            
             jsonObject.put("RECORDING", this.Recording);
+            jsonObject.put("RECORDINGPATH", this.pathRecording);
             jsonObject.put("NOTES", arrayNotes);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return jsonObject;
+    }
+    public void play() {
+        this.playing = true;
+    }
+    public void stop() {
+        this.playing = false;
+    }
+    public boolean isPlaying() {
+        return this.playing;
     }
 }

@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.enrique.organizadorcomposicion.Entities.clsItemRecording;
 
 import java.io.File;
@@ -20,36 +20,30 @@ import java.util.Date;
 import java.util.List;
 
 public class List_recorded extends Fragment {
-    //private static String pathRecorded;
-    View view;
     private RecyclerView recyclerView;
     private List<clsItemRecording> lstData;
+    //private String pathExternalStorageRecording;
 
     // CONSTRUCTOR
     public List_recorded() {
-
     }
 
     // RECIBIR PATH DE LISTA DE GRABACIONES
     public static List_recorded newInstance(String path) {
         List_recorded list = new List_recorded();
-
         Bundle bundle = new Bundle();
         bundle.putString("Path", path);
         list.setArguments(bundle);
-
         return list;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.list_recorded, container, false);
+        View view = inflater.inflate(R.layout.list_recorded, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.rvListRecording);
-        AdapterListRecording adapterListRecording = new AdapterListRecording(getContext(), lstData);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(adapterListRecording);
+        recyclerView = view.findViewById(R.id.rvListRecording);
+        createAdapterForListRecording();
         return view;
     }
 
@@ -63,6 +57,7 @@ public class List_recorded extends Fragment {
 
         // OBTENER CONTENIDO DE DIRECTORIO DE GRABACIONES
         String path = getArguments().getString("Path");
+
         File directory = new File(path);
         File[] files = directory.listFiles();
         for (int i = 0; i < files.length; i++)
@@ -70,7 +65,24 @@ public class List_recorded extends Fragment {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             date = new Date(files[i].lastModified());
 
-            lstData.add(new clsItemRecording(files[i].getName(), dateFormat.format(date), "01:45",path + "/" + files[i].getName()));
+            lstData.add(new clsItemRecording(files[i].getName(), dateFormat.format(date), "",path + "/" + files[i].getName()));
         }
+    }
+    public int getSize() {
+        return lstData.size();
+    }
+
+    public void addNewRecording(clsItemRecording item) {
+        // Agregar item a lista
+        lstData.add(item);
+        // REBUILD adaptador
+        createAdapterForListRecording();
+    }
+
+    private void createAdapterForListRecording() {
+        recyclerView.setAdapter(null);
+        AdapterListRecording adapterListRecording = new AdapterListRecording(getContext(), lstData);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapterListRecording);
     }
 }

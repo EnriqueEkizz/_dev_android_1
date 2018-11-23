@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -16,8 +17,10 @@ import com.example.enrique.organizadorcomposicion.R;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class RecordActivity extends AppCompatActivity {
 
@@ -28,6 +31,7 @@ public class RecordActivity extends AppCompatActivity {
     private MediaRecorder myAudioRecorder;
     private String outputFile;
     private String nameRecording;
+    private String dateRecording;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +56,6 @@ public class RecordActivity extends AppCompatActivity {
                 }
             }
         });
-
         // BOTON LIMPIAR GRABACION
         btnResetRecording.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,11 +66,24 @@ public class RecordActivity extends AppCompatActivity {
             }
         });
     }
+
     private void startRecording() {
-        DateFormat df = new SimpleDateFormat("ddMMyyyy_HHmmss");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String date = df.format(Calendar.getInstance().getTime());
 
-        nameRecording = date + ".m4a";
+        int nextCount = getIntent().getIntExtra("TOTAL_ITEM", 0) + 1;
+        int callIndex = getIntent().getIntExtra("CALL_INDEX",-1);
+
+        Log.i("nextCount: ", String.valueOf(nextCount));
+        Log.i("callIndex: ", String.valueOf(callIndex));
+        //Determinando nombre
+        if (callIndex > -1) {
+            nameRecording = getIntent().getLongExtra("ID_PROJECT", 0) + "-Grabación " + (callIndex + 1);
+        } else {
+            nameRecording = "Grabación " + String.valueOf(nextCount);
+        }
+
+        dateRecording = date;
         outputFile = getExternalFilesDir("Recordings") + "/" + nameRecording;
         myAudioRecorder = new MediaRecorder();
         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -89,19 +105,15 @@ public class RecordActivity extends AppCompatActivity {
     private void stopRecording() {
         myAudioRecorder.stop();
 
-        //CALCULANDO DURACION
-        Uri uri = Uri.parse(outputFile);
-        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-        mmr.setDataSource(this.getBaseContext(), uri);
-        String duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-
         Toast.makeText(getApplicationContext(), "Audio Recorder successfully", Toast.LENGTH_LONG).show();
         Intent returnIntent = new Intent();
         returnIntent.putExtra("PATH", outputFile);
         returnIntent.putExtra("NAME", nameRecording);
-        returnIntent.putExtra("DURATION", duration);
+        returnIntent.putExtra("DATE", dateRecording);
+        returnIntent.putExtra("DURATION", "");
         returnIntent.putExtra("CALL_INDEX", getIntent().getIntExtra("CALL_INDEX",0));
         setResult(RESULT_OK, returnIntent);
+
 
         myAudioRecorder.release();
         myAudioRecorder = null;

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.enrique.organizadorcomposicion.Entities.clsItemRecording;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.List;
 
 public class AdapterListRecording extends RecyclerView.Adapter<AdapterListRecording.VHolder> {
@@ -130,6 +131,7 @@ public class AdapterListRecording extends RecyclerView.Adapter<AdapterListRecord
     //STOP
     private void stopMedia(int p) {
         mediaPlayer.reset();
+        lastPosition = -1;
         lstData.get(p).stop();
         notifyDataSetChanged();
     }

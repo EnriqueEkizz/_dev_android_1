@@ -1,13 +1,17 @@
 package com.example.enrique.organizadorcomposicion.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.example.enrique.organizadorcomposicion.Entities.clsItemRecording;
 import com.example.enrique.organizadorcomposicion.PageAdapter_sources;
 import com.example.enrique.organizadorcomposicion.R;
 import com.example.enrique.organizadorcomposicion.List_project;
@@ -21,6 +25,8 @@ public class MainActivity extends FragmentActivity{
     private FloatingActionButton fabActividadA;
     private static boolean tabRecording = true;
     private List_project listProject;
+    private List_recorded listRecorded;
+    private int REQUEST_CODE = 11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +42,8 @@ public class MainActivity extends FragmentActivity{
         /* Path de directorio de grabaciones*/
         String pathExternalStorageRecording = getExternalFilesDir("Recordings").toString();
         /* Cargando listas en pageAdapter*/
-        pageAdapter_sources.addPageList(List_recorded.newInstance(pathExternalStorageRecording));
+        listRecorded = List_recorded.newInstance(pathExternalStorageRecording);
+        pageAdapter_sources.addPageList(listRecorded);
         listProject = new List_project();
         pageAdapter_sources.addPageList(listProject);
         /*ESTABLECIENDO ADAPTER DE VIEWPAGER*/
@@ -73,11 +80,29 @@ public class MainActivity extends FragmentActivity{
             public void onClick(View v) {
                 if (tabRecording) { // ACTIVIDAD DE GRABACION
                     Intent intent = new Intent(MainActivity.this, RecordActivity.class);
-                    startActivity(intent);
+                    intent.putExtra("TOTAL_ITEM", listRecorded.getSize());
+                    startActivityForResult(intent, REQUEST_CODE);
                 } else {
                     listProject.addEmptyItemProject();
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE){
+            if (resultCode == RESULT_OK) {
+                // Agregar data a clase y agregar a adaptador
+                clsItemRecording item = new clsItemRecording();
+                    item.setPath(data.getStringExtra("PATH"));
+                    item.setTitulo(data.getStringExtra("NAME"));
+                    item.setDuracion(data.getStringExtra("DURATION"));
+                    item.setFechacreacion(data.getStringExtra("DATE"));
+                listRecorded.addNewRecording(item);
+            }
+        }
+
     }
 }

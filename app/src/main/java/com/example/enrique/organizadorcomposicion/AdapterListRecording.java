@@ -6,14 +6,18 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.enrique.organizadorcomposicion.Entities.clsItemRecording;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
@@ -33,6 +37,7 @@ public class AdapterListRecording extends RecyclerView.Adapter<AdapterListRecord
         public TextView tvDuracion;
         public LinearLayout lyFrameRecord;
         public ImageView ivIconRecordingFile;
+        public ImageButton ibItemOptionsRecording;
 
         public VHolder(@NonNull View itemView) {
             super(itemView);
@@ -42,6 +47,7 @@ public class AdapterListRecording extends RecyclerView.Adapter<AdapterListRecord
             tvDuracion = itemView.findViewById(R.id.tvDuracion);
             lyFrameRecord = itemView.findViewById(R.id.lyFrameRecord);
             ivIconRecordingFile = itemView.findViewById(R.id.ivIconRecordingFile);
+            ibItemOptionsRecording = itemView.findViewById(R.id.btnItemOptionsRecording);
         }
     }
 
@@ -72,6 +78,34 @@ public class AdapterListRecording extends RecyclerView.Adapter<AdapterListRecord
             vHolder.ivIconRecordingFile.setImageResource(R.drawable.ic_play);
         }
 
+        //MENU OPTIONS
+        vHolder.ibItemOptionsRecording.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(context, vHolder.ibItemOptionsRecording);
+                popupMenu.inflate(R.menu.menu_item_recording);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.optionRecordings_1:
+                                // Eliminar file
+                                File file = new File(lstData.get(vHolder.getAdapterPosition()).getPath());
+                                if (file.delete()) {
+                                    // Eliminar clase de adaptador
+                                    lstData.remove(vHolder.getAdapterPosition());
+                                    // Refrescar adaptador
+                                    notifyDataSetChanged();
+                                }
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                popupMenu.show();
+            }
+        });
         //REPRODUCIR AUDIO
         vHolder.lyFrameRecord.setOnClickListener(new View.OnClickListener() {
             @Override

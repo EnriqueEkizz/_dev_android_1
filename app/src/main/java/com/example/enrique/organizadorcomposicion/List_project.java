@@ -36,7 +36,7 @@ public class List_project extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.list_project, container,false);
         recyclerView = view.findViewById(R.id.rvListProject);
-        adapterListProject = new AdapterListProject(getContext(), lstData);
+        adapterListProject = new AdapterListProject(getContext(), lstData, dataHelper);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapterListProject);
         return view;
@@ -68,7 +68,6 @@ public class List_project extends Fragment{
     private ArrayList<clsItemProject> gettingProjectsListFromDatabase() {
         ArrayList<clsDataProjects> listData;
         ArrayList<clsItemProject> list = new ArrayList<>();
-
         //open data
         dataHelper = new DatabaseHelper(getContext());
         //get list
@@ -97,4 +96,5 @@ public class List_project extends Fragment{
         dataHelper.closeDB();
         return request_id;
     }
+    //DELETE project FROM database
 }

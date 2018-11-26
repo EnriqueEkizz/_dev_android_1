@@ -41,10 +41,12 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
-            <ImageView
+            <ImageButton
+                android:id="@+id/btnItemOptionsProject"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="10dp"
+                android:background="@color/white"
+                android:paddingHorizontal="13dp"
                 android:src="@drawable/ic_options" />
         </LinearLayout>
     </LinearLayout>

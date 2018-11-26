@@ -45,6 +45,9 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
         //Opciones de menu
         public ImageButton btnAddRecording;
         public ImageButton btnAddNote;
+        public ImageButton btnMoveUp;
+        public ImageButton btnMoveDown;
+        public ImageButton btnDeleteHarmonyBlock;
         //Detalles de bloque
         public ImageButton btnRecording;
         public ImageButton btnPlayRecording;
@@ -64,6 +67,9 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
             //OPCIONES DE MENU
             btnAddNote = itemView.findViewById(R.id.btnAddNote);
             btnAddRecording = itemView.findViewById(R.id.btnRec);
+            btnMoveUp = itemView.findViewById(R.id.btnMoveUp);
+            btnMoveDown = itemView.findViewById(R.id.btnMoveDown);
+            btnDeleteHarmonyBlock = itemView.findViewById(R.id.btnDeleteHarmonyBlock);
         }
     }
 
@@ -112,7 +118,9 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
         if (harmonyBlock.getRecording().length() != 0) {
             vHolder.tvRecordingName.setText(harmonyBlock.getRecording());
             vHolder.btnRecording.setVisibility(View.GONE);
+            vHolder.btnPlayRecording.setVisibility(View.VISIBLE);
         } else {
+            vHolder.btnRecording.setVisibility(View.VISIBLE);
             vHolder.btnPlayRecording.setVisibility(View.GONE);
         }
         // PLAY / PAUSE
@@ -128,17 +136,71 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
                 Intent intent = new Intent(context, RecordActivity.class);
                 intent.putExtra("ID_PROJECT", ID);
                 intent.putExtra("CALL_INDEX", vHolder.getAdapterPosition());
-
                 ((Activity) context).startActivityForResult(intent, CODE);
             }
         });
-        // AGREGAR NOTA DE CIRCULO ARMONICO
-        vHolder.btnAddNote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addHarmonyNote("C", context, vHolder.frameNotes, true, vHolder.getAdapterPosition());
-            }
-        });
+        // MENU
+            // AGREGAR NOTA DE CIRCULO ARMONICO
+            vHolder.btnAddNote.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addHarmonyNote("C", context, vHolder.frameNotes, true, vHolder.getAdapterPosition());
+                }
+            });
+            // MOVER ARRIBA CIRCULO ARMONICO
+            vHolder.btnMoveUp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Tomando indice
+                    int i = vHolder.getAdapterPosition();
+                    if (i > 0) {
+                        // Eliminando contenido de framenotas
+                        deleteAllHarmonyNote(vHolder.frameNotes);
+                        //deleteAllHarmonyNote(vHolder.getLayoutPosition();
+                        // Tomando bloques
+                        clsHarmonyBlock blockToUp = ListHarmonyBlocks.get(i);
+                        clsHarmonyBlock blockToDown = ListHarmonyBlocks.get(i - 1);
+                        // Cambiando de lugar
+                        ListHarmonyBlocks.set(i - 1, blockToUp);
+                        ListHarmonyBlocks.set(i, blockToDown);
+                        // Refrescando adaptador
+                        notifyDataSetChanged();
+                    }
+                }
+            });
+            // MOVER ABAJO CIRCULO ARMONICO
+            vHolder.btnMoveDown.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Tomando indice
+                    int i = vHolder.getAdapterPosition();
+                    if (i < getItemCount() - 1) {
+                        // Eliminando contenido de framenotas
+                        deleteAllHarmonyNote(vHolder.frameNotes);
+                        // Tomando bloques
+                        clsHarmonyBlock blockToDown = ListHarmonyBlocks.get(i);
+                        clsHarmonyBlock blockToUp = ListHarmonyBlocks.get(i + 1);
+                        // Cambiando de lugar
+                        ListHarmonyBlocks.set(i + 1, blockToDown);
+                        ListHarmonyBlocks.set(i, blockToUp);
+                        // Refrescando adaptador
+                        notifyDataSetChanged();
+                    }
+                }
+            });
+            // BORRAR CIRCULO ARMONICO
+            vHolder.btnDeleteHarmonyBlock.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Cerrar menu de opciones
+                    vHolder.popupMenu.setVisibility(View.GONE);
+                    // Eliminar clase de lista harmonyblock
+                    ListHarmonyBlocks.remove(vHolder.getAdapterPosition());
+                    // Refrescar adaptador
+                    notifyDataSetChanged();
+                }
+            });
+
         //REPRODUCIR AUDIO
         vHolder.btnPlayRecording.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +228,11 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
         if (addToList) {
             this.ListHarmonyBlocks.get(xPosition).addHarmonyNotes(xNote);
         }
+    }
+    private void deleteAllHarmonyNote(LinearLayout xLinearLayout){
+        Log.i("INGRESO CON: ", String.valueOf(xLinearLayout.getChildCount()));
+        xLinearLayout.removeAllViews();
+        Log.i("SALIO CON: ", String.valueOf(xLinearLayout.getChildCount()));
     }
 
     @Override

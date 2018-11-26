@@ -79,18 +79,21 @@
                         android:src="@drawable/ic_note"
                         android:background="@drawable/shape_a"/>
                     <ImageButton
+                        android:id="@+id/btnMoveUp"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginHorizontal="5dp"
                         android:src="@drawable/ic_go_up"
                         android:background="@drawable/shape_b"/>
                     <ImageButton
+                        android:id="@+id/btnMoveDown"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginHorizontal="5dp"
                         android:src="@drawable/ic_go_down"
                         android:background="@drawable/shape_c"/>
                     <ImageButton
+                        android:id="@+id/btnDeleteHarmonyBlock"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginHorizontal="5dp"

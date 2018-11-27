@@ -6,11 +6,16 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.support.v7.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.enrique.organizadorcomposicion.AdapterContentProject;
@@ -22,11 +27,15 @@ import com.example.enrique.organizadorcomposicion.Entities.clsHarmonyBlock;
 import com.example.enrique.organizadorcomposicion.Entities.clsProjectStructure;
 import com.example.enrique.organizadorcomposicion.R;
 
-public class ProjectActivity extends AppCompatActivity {
+import static android.support.v7.view.ActionMode.*;
+
+public class ProjectActivity extends AppCompatActivity implements AdapterContentProject.OnItemClickListener {
     // CLASE PRINCIPAL DE LA ESTRUCTURA DEL PROYECTO
     private clsProjectStructure projectStructure;
     private RecyclerView recyclerView;
+    private AdapterContentProject adapterContentProject;
     private DatabaseHelper dataHelper;
+    private android.support.v7.view.ActionMode actionMode;
     private int REQUEST_CODE = 12;
 
     @Override
@@ -38,6 +47,8 @@ public class ProjectActivity extends AppCompatActivity {
 
         //SETEAR CLASE DE ESTRUCTURA DE PROYECTO CON INTENT
         projectStructure = getProjectStructureFromDatabase(Integer.parseInt(getIntent().getStringExtra("ID_PROJECT")));
+        adapterContentProject = new AdapterContentProject(this, projectStructure,REQUEST_CODE);
+        adapterContentProject.setOnItemClickListener(this);
 
         //TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -88,7 +99,7 @@ public class ProjectActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE){
             if (resultCode == RESULT_OK) {
                 int index = data.getIntExtra("CALL_INDEX", 0);
@@ -100,9 +111,26 @@ public class ProjectActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onItemLongPress(int position) {
+        Log.i("ENTRO e INDICE: ", String.valueOf(position));
+        actionMode = startSupportActionMode(new ActionModeCallBack());
+        select(position);
+    }
+    private void select(int position) {
+        //adapterContentProject.select(position);
+        int count = adapterContentProject.getItemCount();
+        if (count == 0) {
+            actionMode.finish();
+            actionMode = null;
+        } else {
+            actionMode.setTitle("1");
+            actionMode.invalidate();
+        }
+    }
+
     private void createAdapterForProject(clsProjectStructure xClsProjectStructure) {
         recyclerView.setAdapter(null);
-        AdapterContentProject adapterContentProject = new AdapterContentProject(this, xClsProjectStructure, REQUEST_CODE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapterContentProject);
     }
@@ -122,5 +150,48 @@ public class ProjectActivity extends AppCompatActivity {
         return structure;
     }
 
+    private class ActionModeCallBack implements ActionMode.Callback {
+        @Override
+        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+            MenuInflater inflater = actionMode.getMenuInflater();
+            inflater.inflate(R.menu.menu_content_project, menu);
+            getWindow().setStatusBarColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
+            return true;
+        }
 
+        @Override
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            return true;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.action_addnote:
+                    Log.i("ACTION: ", "ADD NOTE");
+                    actionMode.finish();
+                    return true;
+                case R.id.action_moveup:
+                    Log.i("ACTION: ", "MOVE UP");
+                    actionMode.finish();
+                    return true;
+                case R.id.action_movedown:
+                    Log.i("ACTION: ", "MOVE DOWN");
+                    actionMode.finish();
+                    return true;
+                case R.id.action_delete:
+                    Log.i("ACTION: ", "DELETE ITEM");
+                    actionMode.finish();
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {
+            //adapterContentProject.clearSelections();
+            createAdapterForProject(projectStructure);
+        }
+    };
 }

@@ -16,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.enrique.organizadorcomposicion.Activity.ProjectActivity;
 import com.example.enrique.organizadorcomposicion.Activity.RecordActivity;
 import com.example.enrique.organizadorcomposicion.Entities.clsHarmonyBlock;
 import com.example.enrique.organizadorcomposicion.Entities.clsProjectStructure;
@@ -34,9 +33,12 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
     private int CODE;
     private MediaPlayer mediaPlayer;
     private int lastPosition = -1;
+    private OnItemClickListener onItemClickListener;
 
     ///////////////////// CLASE ViewHolder
-    public class VHolder extends RecyclerView.ViewHolder {
+    //public class VHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public class VHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+    //public class VHolder extends RecyclerView.ViewHolder{
         //Menu
         public ImageButton btnMenuOpen;
         public ImageButton btnMenuClose;
@@ -70,6 +72,16 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
             btnMoveUp = itemView.findViewById(R.id.btnMoveUp);
             btnMoveDown = itemView.findViewById(R.id.btnMoveDown);
             btnDeleteHarmonyBlock = itemView.findViewById(R.id.btnDeleteHarmonyBlock);
+            //LISTENER
+            itemView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemLongPress(getAdapterPosition());
+            }
+            return true;
         }
     }
 
@@ -80,8 +92,9 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
         this.CODE = xCodeRequest;
         mediaPlayer = new MediaPlayer();
     }
-    public void addHarmonyBlock(clsHarmonyBlock xHarmonyBlock) {
-        this.ListHarmonyBlocks.add(xHarmonyBlock);
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -105,13 +118,13 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
         vHolder.btnMenuOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vHolder.popupMenu.setVisibility(View.VISIBLE);
+                //vHolder.actionMode = ((AppCompatActivity)context).startSupportActionMode(new ContextualCallBack(vHolder));
             }
         });
         vHolder.btnMenuClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vHolder.popupMenu.setVisibility(View.GONE);
+                //vHolder.popupMenu.setVisibility(View.GONE);
             }
         });
         // ESTABLECER GRABACION
@@ -230,9 +243,7 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
         }
     }
     private void deleteAllHarmonyNote(LinearLayout xLinearLayout){
-        Log.i("INGRESO CON: ", String.valueOf(xLinearLayout.getChildCount()));
         xLinearLayout.removeAllViews();
-        Log.i("SALIO CON: ", String.valueOf(xLinearLayout.getChildCount()));
     }
 
     @Override
@@ -281,5 +292,10 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
         lastPosition = -1;
         ListHarmonyBlocks.get(p).stop();
         notifyDataSetChanged();
+    }
+
+    // INTERFACE
+    public interface OnItemClickListener{
+        void onItemLongPress(int position);
     }
 }

@@ -28,6 +28,7 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
     //ID DE PROYECTO PARA CONSULTAR EN BASE DE DATOS
     //Id project
     long ID;
+    private clsProjectStructure projectStructure;
     private Context context;
     List<clsHarmonyBlock> ListHarmonyBlocks;
     private int CODE;
@@ -36,20 +37,10 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
     private OnItemClickListener onItemClickListener;
 
     ///////////////////// CLASE ViewHolder
-    //public class VHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
     public class VHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
-    //public class VHolder extends RecyclerView.ViewHolder{
-        //Menu
-        public ImageButton btnMenuOpen;
-        public ImageButton btnMenuClose;
-        public LinearLayout popupMenu;
         public LinearLayout frameNotes;
         //Opciones de menu
         public ImageButton btnAddRecording;
-        public ImageButton btnAddNote;
-        public ImageButton btnMoveUp;
-        public ImageButton btnMoveDown;
-        public ImageButton btnDeleteHarmonyBlock;
         //Detalles de bloque
         public ImageButton btnRecording;
         public ImageButton btnPlayRecording;
@@ -59,19 +50,11 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
             super(itemView);
             //FRAME PARA NOTA DE CIRCULO ARMONICO
             frameNotes = itemView.findViewById(R.id.frameNotes);
-            popupMenu = itemView.findViewById(R.id.popupMenu);
             btnRecording = itemView.findViewById(R.id.btnRec);
             btnPlayRecording = itemView.findViewById(R.id.btnPlay);
             tvRecordingName = itemView.findViewById(R.id.tvNameRecording);
-            //MENU
-            btnMenuOpen = itemView.findViewById(R.id.btnOpenMenu);
-            btnMenuClose = itemView.findViewById(R.id.btnCloseMenu);
             //OPCIONES DE MENU
-            btnAddNote = itemView.findViewById(R.id.btnAddNote);
             btnAddRecording = itemView.findViewById(R.id.btnRec);
-            btnMoveUp = itemView.findViewById(R.id.btnMoveUp);
-            btnMoveDown = itemView.findViewById(R.id.btnMoveDown);
-            btnDeleteHarmonyBlock = itemView.findViewById(R.id.btnDeleteHarmonyBlock);
             //LISTENER
             itemView.setOnLongClickListener(this);
         }
@@ -88,6 +71,7 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
     public AdapterContentProject(Context xContext, clsProjectStructure xProjectStructure, int xCodeRequest) {
         this.context = xContext;
         this.ID = xProjectStructure.getIdProject();
+        this.projectStructure = xProjectStructure;
         this.ListHarmonyBlocks = xProjectStructure.getContent().getAllHarmonyBlock();
         this.CODE = xCodeRequest;
         mediaPlayer = new MediaPlayer();
@@ -111,22 +95,15 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
         clsHarmonyBlock harmonyBlock = ListHarmonyBlocks.get(i);
 
         // INSERTAR NOTAS DE CIRUCLO ARMONICO EN BLOQUE INICIALES
-        for (String note : harmonyBlock.getHarmonyNotes()) {
-            addHarmonyNote(note, context, vHolder.frameNotes, false, 0);
-        }
-        // MOSTRAR / OCULTAR MENU
-        vHolder.btnMenuOpen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //vHolder.actionMode = ((AppCompatActivity)context).startSupportActionMode(new ContextualCallBack(vHolder));
+        //if (!harmonyBlock.isInflated()) { // Verificar si ya esta inflado
+        Log.i("Inflar: ", String.valueOf(harmonyBlock.isInflate()));
+        //if (!harmonyBlock.isInflate()) {
+            for (String note : harmonyBlock.getHarmonyNotes()) {
+                addHarmonyNote(note, context, vHolder.frameNotes, false, 0);
             }
-        });
-        vHolder.btnMenuClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //vHolder.popupMenu.setVisibility(View.GONE);
-            }
-        });
+            //harmonyBlock.setInflate(true);
+        //}
+
         // ESTABLECER GRABACION
         if (harmonyBlock.getRecording().length() != 0) {
             vHolder.tvRecordingName.setText(harmonyBlock.getRecording());
@@ -152,82 +129,26 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
                 ((Activity) context).startActivityForResult(intent, CODE);
             }
         });
-        // MENU
-            // AGREGAR NOTA DE CIRCULO ARMONICO
-            vHolder.btnAddNote.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    addHarmonyNote("C", context, vHolder.frameNotes, true, vHolder.getAdapterPosition());
-                }
-            });
-            // MOVER ARRIBA CIRCULO ARMONICO
-            vHolder.btnMoveUp.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Tomando indice
-                    int i = vHolder.getAdapterPosition();
-                    if (i > 0) {
-                        // Eliminando contenido de framenotas
-                        deleteAllHarmonyNote(vHolder.frameNotes);
-                        //deleteAllHarmonyNote(vHolder.getLayoutPosition();
-                        // Tomando bloques
-                        clsHarmonyBlock blockToUp = ListHarmonyBlocks.get(i);
-                        clsHarmonyBlock blockToDown = ListHarmonyBlocks.get(i - 1);
-                        // Cambiando de lugar
-                        ListHarmonyBlocks.set(i - 1, blockToUp);
-                        ListHarmonyBlocks.set(i, blockToDown);
-                        // Refrescando adaptador
-                        notifyDataSetChanged();
-                    }
-                }
-            });
-            // MOVER ABAJO CIRCULO ARMONICO
-            vHolder.btnMoveDown.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Tomando indice
-                    int i = vHolder.getAdapterPosition();
-                    if (i < getItemCount() - 1) {
-                        // Eliminando contenido de framenotas
-                        deleteAllHarmonyNote(vHolder.frameNotes);
-                        // Tomando bloques
-                        clsHarmonyBlock blockToDown = ListHarmonyBlocks.get(i);
-                        clsHarmonyBlock blockToUp = ListHarmonyBlocks.get(i + 1);
-                        // Cambiando de lugar
-                        ListHarmonyBlocks.set(i + 1, blockToDown);
-                        ListHarmonyBlocks.set(i, blockToUp);
-                        // Refrescando adaptador
-                        notifyDataSetChanged();
-                    }
-                }
-            });
-            // BORRAR CIRCULO ARMONICO
-            vHolder.btnDeleteHarmonyBlock.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Cerrar menu de opciones
-                    vHolder.popupMenu.setVisibility(View.GONE);
-                    // Eliminar clase de lista harmonyblock
-                    ListHarmonyBlocks.remove(vHolder.getAdapterPosition());
-                    // Refrescar adaptador
-                    notifyDataSetChanged();
-                }
-            });
-
         //REPRODUCIR AUDIO
         vHolder.btnPlayRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("last position; ", String.valueOf(vHolder.getAdapterPosition()));
                 playRecorded(vHolder.getAdapterPosition());
+                notifyItemChanged(vHolder.getAdapterPosition());
             }
         });
-        //AL FINALIZAR REPRODUCCION
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 stopMedia(lastPosition);
+                Log.i("last position; ", String.valueOf(lastPosition));
+                notifyItemChanged(lastPosition);
+                //ListHarmonyBlocks.get(lastPosition).setInflate(true);
+                lastPosition = -1;
             }
         });
+
     }
     private void addHarmonyNote(String xNote, Context xContext, LinearLayout xLinearLayout, boolean addToList, int xPosition) {
         Button imgbtn = new Button(context);
@@ -239,7 +160,7 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
         imgbtn.setTextSize(18);
         xLinearLayout.addView(imgbtn);
         if (addToList) {
-            this.ListHarmonyBlocks.get(xPosition).addHarmonyNotes(xNote);
+            this.ListHarmonyBlocks.get(xPosition).addHarmonyNote(xNote);
         }
     }
     private void deleteAllHarmonyNote(LinearLayout xLinearLayout){
@@ -250,6 +171,7 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
     public int getItemCount() {
         return ListHarmonyBlocks.size();
     }
+
 
     //ADMINISTRAR REPRODUCCION
     private void playRecorded(int position) {
@@ -270,7 +192,7 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
             mediaPlayer.prepare();
             mediaPlayer.start();
             ListHarmonyBlocks.get(p).play();
-            notifyDataSetChanged();
+            //notifyDataSetChanged();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -284,14 +206,14 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
             ListHarmonyBlocks.get(p).play();
             mediaPlayer.start();
         }
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
     }
     //STOP
     private void stopMedia(int p) {
         mediaPlayer.reset();
-        lastPosition = -1;
+        //lastPosition = -1;
         ListHarmonyBlocks.get(p).stop();
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
     }
 
     // INTERFACE

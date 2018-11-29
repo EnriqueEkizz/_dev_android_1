@@ -113,11 +113,11 @@ public class ProjectActivity extends AppCompatActivity implements AdapterContent
 
     @Override
     public void onItemLongPress(int position) {
-        Log.i("ENTRO e INDICE: ", String.valueOf(position));
-        actionMode = startSupportActionMode(new ActionModeCallBack());
-        select(position);
+        //Log.i("ENTRO e INDICE: ", String.valueOf(position));
+        actionMode = startSupportActionMode(new ActionModeCallBack(position));
+        select();
     }
-    private void select(int position) {
+    private void select() {
         //adapterContentProject.select(position);
         int count = adapterContentProject.getItemCount();
         if (count == 0) {
@@ -149,8 +149,15 @@ public class ProjectActivity extends AppCompatActivity implements AdapterContent
         structure.getContent().setContentData(dataProjects.getContent());
         return structure;
     }
+    // MOVE UP harmonyblock
+    // MOVE DOWN harmonyblock
 
     private class ActionModeCallBack implements ActionMode.Callback {
+        int position;
+
+        public ActionModeCallBack(int position) {
+            this.position = position;
+        }
         @Override
         public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
             MenuInflater inflater = actionMode.getMenuInflater();
@@ -168,19 +175,28 @@ public class ProjectActivity extends AppCompatActivity implements AdapterContent
         public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.action_addnote:
-                    Log.i("ACTION: ", "ADD NOTE");
+                    projectStructure.getContent().addHarmonyNote(position,"C");
+                    //createAdapterForProject(projectStructure);
+                    projectStructure.getContent().getAllHarmonyBlock().get(position).setInflate(false);
+                    adapterContentProject.notifyItemChanged(position);
                     actionMode.finish();
                     return true;
-                case R.id.action_moveup:
-                    Log.i("ACTION: ", "MOVE UP");
+                case R.id.action_moveup: // Mover arriba harmonyblock
+                    if (projectStructure.getContent().moveUpHarmonyBlock(position)) {
+                        //createAdapterForProject(projectStructure);
+                        adapterContentProject.notifyDataSetChanged();
+                    }
                     actionMode.finish();
                     return true;
-                case R.id.action_movedown:
-                    Log.i("ACTION: ", "MOVE DOWN");
+                case R.id.action_movedown: // Mover abajo harmonyblock
+                    if (projectStructure.getContent().moveDownHarmonyBlock(position)) {
+                        createAdapterForProject(projectStructure);
+                    }
                     actionMode.finish();
                     return true;
-                case R.id.action_delete:
-                    Log.i("ACTION: ", "DELETE ITEM");
+                case R.id.action_delete: // Delete harmonyblock
+                    projectStructure.getContent().deleteHarmonyBlock(position);
+                    createAdapterForProject(projectStructure);
                     actionMode.finish();
                     return true;
                 default:
@@ -190,7 +206,6 @@ public class ProjectActivity extends AppCompatActivity implements AdapterContent
 
         @Override
         public void onDestroyActionMode(ActionMode actionMode) {
-            //adapterContentProject.clearSelections();
             createAdapterForProject(projectStructure);
         }
     };

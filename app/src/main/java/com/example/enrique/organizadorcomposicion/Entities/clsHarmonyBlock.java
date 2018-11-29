@@ -11,23 +11,27 @@ public class clsHarmonyBlock {
     private String pathRecording = "";
     private ArrayList<String> HarmonyNotes;
     private boolean playing;
+    private boolean inflate = false;
 
     public clsHarmonyBlock() {
         this.HarmonyNotes = new ArrayList<>();
         this.playing = false;
     }
 
+    // METHODS SET
     public void setRecording(String xRecording) {
         this.Recording = xRecording;
     }
     public String getRecording() {
         return  this.Recording;
     }
+    public void setPathRecording(String pathRecording) {
+        this.pathRecording = pathRecording;
+    }
     public void deleteRecording() {
         this.Recording = "";
     }
-
-    public void addHarmonyNotes(String xNotes) {
+    public void addHarmonyNote(String xNotes) {
         this.HarmonyNotes.add(xNotes);
     }
     public void deleteHarmonyNotes(int index) {
@@ -36,19 +40,29 @@ public class clsHarmonyBlock {
     public void updateHarmonyNotes(int index, String xNotes){
         this.HarmonyNotes.set(index, xNotes);
     }
+    public void play() {
+        this.playing = true;
+    }
+    public void stop() {
+        this.playing = false;
+    }
+    public void setInflate(boolean inflate) {
+        this.inflate = inflate;
+    }
 
+    // METHODS GET
+    public boolean isInflate() {
+        return this.inflate;
+    }
     public String getPathRecording() {
         return pathRecording;
     }
-
-    public void setPathRecording(String pathRecording) {
-        this.pathRecording = pathRecording;
-    }
-
     public ArrayList<String> getHarmonyNotes() {
         return HarmonyNotes;
     }
-
+    public boolean isPlaying() {
+        return this.playing;
+    }
     public JSONObject getJsonBlock() {
         JSONObject jsonObject = new JSONObject();
         //Grabacion de bloque
@@ -65,14 +79,5 @@ public class clsHarmonyBlock {
         }
 
         return jsonObject;
-    }
-    public void play() {
-        this.playing = true;
-    }
-    public void stop() {
-        this.playing = false;
-    }
-    public boolean isPlaying() {
-        return this.playing;
     }
 }

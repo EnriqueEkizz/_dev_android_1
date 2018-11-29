@@ -113,7 +113,7 @@ public class clsProjectStructure {
                     harmonyBlock.setPathRecording(obj.getString("RECORDINGPATH"));
                     JSONArray arrNotes = obj.getJSONArray("NOTES");
                     for (int j = 0; j < arrNotes.length(); j++) {
-                        harmonyBlock.addHarmonyNotes(arrNotes.getString(j));
+                        harmonyBlock.addHarmonyNote(arrNotes.getString(j));
                     }
                     // Agregando clase harmonyblock a proyecto
                     this.HarmonyBlocks.add(harmonyBlock);
@@ -171,6 +171,39 @@ public class clsProjectStructure {
                 e.printStackTrace();
             }
             return "err";
+        }
+
+        // METHODS ACTIONS
+        public boolean moveUpHarmonyBlock(int index) {
+            if (index > 0) {
+                // Tomando bloques
+                clsHarmonyBlock blockToUp = HarmonyBlocks.get(index);
+                clsHarmonyBlock blockToDown = HarmonyBlocks.get(index - 1);
+                // Cambiando de lugar
+                HarmonyBlocks.set(index - 1, blockToUp);
+                HarmonyBlocks.set(index, blockToDown);
+                return true;
+            } else {
+                return false;
+            }
+        }
+        public boolean moveDownHarmonyBlock(int index) {
+            if (index < HarmonyBlocks.size() - 1) {
+                clsHarmonyBlock blockToDown = HarmonyBlocks.get(index);
+                clsHarmonyBlock blockToUp = HarmonyBlocks.get(index + 1);
+                // Cambiando de lugar
+                HarmonyBlocks.set(index + 1, blockToDown);
+                HarmonyBlocks.set(index, blockToUp);
+                return true;
+            } else {
+                return false;
+            }
+        }
+        public void deleteHarmonyBlock(int index) {
+            HarmonyBlocks.remove(index);
+        }
+        public void addHarmonyNote(int index, String note) {
+            HarmonyBlocks.get(index).addHarmonyNote(note);
         }
     }
 }

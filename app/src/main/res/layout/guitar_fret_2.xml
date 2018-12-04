@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="3dp">
+    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/tvFretNumber"
         android:layout_width="match_parent"
@@ -16,49 +15,59 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <ImageButton
+        <Button
             android:id="@+id/string_6"
             android:layout_width="@dimen/squareButton"
             android:layout_height="@dimen/squareButton"
             android:background="@drawable/shape_e"
             android:layout_weight="1"
-            android:layout_marginHorizontal="3dp"
-            android:textColor="@color/white"
-            android:text="C"/>
-        <ImageButton
+            android:layout_margin="3dp"
+            android:textSize="18dp"
+            android:text="A#"/>
+        <Button
             android:id="@+id/string_5"
             android:layout_width="@dimen/squareButton"
             android:layout_height="@dimen/squareButton"
             android:background="@drawable/shape_e"
             android:layout_weight="1"
-            android:layout_marginHorizontal="3dp"/>
-        <ImageButton
+            android:layout_margin="3dp"
+            android:textSize="18dp"
+            android:text="A#"/>
+        <Button
             android:id="@+id/string_4"
             android:layout_width="@dimen/squareButton"
             android:layout_height="@dimen/squareButton"
             android:background="@drawable/shape_e"
             android:layout_weight="1"
-            android:layout_marginHorizontal="3dp"/>
-        <ImageButton
+            android:layout_margin="3dp"
+            android:textSize="18dp"
+            android:text="A#"/>
+        <Button
             android:id="@+id/string_3"
             android:layout_width="@dimen/squareButton"
             android:layout_height="@dimen/squareButton"
             android:background="@drawable/shape_e"
             android:layout_weight="1"
-            android:layout_marginHorizontal="3dp"/>
-        <ImageButton
+            android:layout_margin="3dp"
+            android:textSize="18dp"
+            android:text="A#"/>
+        <Button
             android:id="@+id/string_2"
             android:layout_width="@dimen/squareButton"
             android:layout_height="@dimen/squareButton"
             android:background="@drawable/shape_e"
             android:layout_weight="1"
-            android:layout_marginHorizontal="3dp"/>
-        <ImageButton
+            android:layout_margin="3dp"
+            android:textSize="18dp"
+            android:text="A#"/>
+        <Button
             android:id="@+id/string_1"
             android:layout_width="@dimen/squareButton"
             android:layout_height="@dimen/squareButton"
             android:background="@drawable/shape_e"
             android:layout_weight="1"
-            android:layout_marginHorizontal="3dp"/>
+            android:layout_margin="3dp"
+            android:textSize="18dp"
+            android:text="A#"/>
     </LinearLayout>
 </LinearLayout>

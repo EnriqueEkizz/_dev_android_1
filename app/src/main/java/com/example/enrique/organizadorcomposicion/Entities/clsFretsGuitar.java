@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class clsFretsGuitar {
     private int Fret;
-    private ArrayList<Boolean> Strings;
+    public ArrayList<Boolean> Strings;
 
     public clsFretsGuitar(int fret) {
         //ESTABLECER TRASTE DE GUITARRA
@@ -29,4 +29,5 @@ public class clsFretsGuitar {
     public String getNumberFret() {
         return String.valueOf(Fret);
     }
+
 }

@@ -18,7 +18,7 @@ import java.util.List;
 public class screen_guitar extends Fragment {
 
     List<clsFretsGuitar> ListFretsGuitar;
-
+    public AdapterFretsGuitar adapterFretsGuitar;
     public screen_guitar() {
     }
 
@@ -38,7 +38,7 @@ public class screen_guitar extends Fragment {
         View view = inflater.inflate(R.layout.screen_guitar_24, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.rvGuitarScreen);
-        AdapterFretsGuitar adapterFretsGuitar = new AdapterFretsGuitar(getContext(), ListFretsGuitar);
+        adapterFretsGuitar = new AdapterFretsGuitar(getContext(), ListFretsGuitar);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapterFretsGuitar);
 

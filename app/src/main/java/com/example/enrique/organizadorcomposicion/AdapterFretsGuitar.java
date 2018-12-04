@@ -7,11 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.enrique.organizadorcomposicion.Entities.clsFretsGuitar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterFretsGuitar extends RecyclerView.Adapter<AdapterFretsGuitar.VHolder> {
@@ -25,7 +26,7 @@ public class AdapterFretsGuitar extends RecyclerView.Adapter<AdapterFretsGuitar.
     }
 
     public class VHolder extends RecyclerView.ViewHolder{
-        public ImageButton btnString1,
+        public Button btnString1,
                 btnString2,
                 btnString3,
                 btnString4,
@@ -49,7 +50,7 @@ public class AdapterFretsGuitar extends RecyclerView.Adapter<AdapterFretsGuitar.
     @NonNull
     @Override
     public VHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.guitar_fret, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.guitar_fret_2, viewGroup, false);
 
         return new VHolder(view);
     }
@@ -59,10 +60,11 @@ public class AdapterFretsGuitar extends RecyclerView.Adapter<AdapterFretsGuitar.
         clsFretsGuitar fretsGuitar = ListFretsGuitar.get(i);
 
         //vHolder.tvFretNumber.setText(fretsGuitar.getNumberFret(i));
-        switch (i) {
+        /*switch (i) {
             case 2: case 4: case 6: case 8: case 11: case 14: case 16: case 18: case 20: case 23:
                 vHolder.tvFretNumber.setText(fretsGuitar.getNumberFret());
-        }
+        }*/
+        vHolder.tvFretNumber.setText(fretsGuitar.getNumberFret());
 
         vHolder.btnString1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +109,7 @@ public class AdapterFretsGuitar extends RecyclerView.Adapter<AdapterFretsGuitar.
         return ListFretsGuitar.size();
     }
 
-    private void pressStringOnList(int thisFret, int thisString, ImageButton btnString) {
+    private void pressStringOnList(int thisFret, int thisString, Button btnString) {
         thisFret--;
         if (ListFretsGuitar.get(thisFret).isPressed(thisString)) {
             ListFretsGuitar.get(thisFret).unpressString(thisString);
@@ -116,5 +118,59 @@ public class AdapterFretsGuitar extends RecyclerView.Adapter<AdapterFretsGuitar.
             ListFretsGuitar.get(thisFret).pressString(thisString);
             btnString.setBackgroundResource(R.drawable.shape_c);
         }
+    }
+
+    public ArrayList<ArrayList<Integer>> getListNotesUsed() {
+        int c = 1, y = 1;
+        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+        ArrayList<Integer> string1 = new ArrayList<>();
+        ArrayList<Integer> string2 = new ArrayList<>();
+        ArrayList<Integer> string3 = new ArrayList<>();
+        ArrayList<Integer> string4 = new ArrayList<>();
+        ArrayList<Integer> string5 = new ArrayList<>();
+        ArrayList<Integer> string6 = new ArrayList<>();
+
+        for (clsFretsGuitar fret : ListFretsGuitar) {
+            c = 1;
+            for (boolean pressed : fret.Strings) {
+                if (pressed) {
+                    switch (c) {
+                        case 1:
+                            string1.add(y);
+                            break;
+                        case 2:
+                            string2.add(y);
+                            break;
+                        case 3:
+                            string3.add(y);
+                            break;
+                        case 4:
+                            string4.add(y);
+                            break;
+                        case 5:
+                            string5.add(y);
+                            break;
+                        case 6:
+                            string6.add(y);
+                            break;
+                    }
+                }
+                c++;
+            }
+            y++;
+        }
+        Log.i("Cuerda 1: ", string1.toString());
+        list.add(string1);
+        Log.i("Cuerda 2: ", string2.toString());
+        list.add(string2);
+        Log.i("Cuerda 3: ", string3.toString());
+        list.add(string3);
+        Log.i("Cuerda 4: ", string4.toString());
+        list.add(string4);
+        Log.i("Cuerda 5: ", string5.toString());
+        list.add(string5);
+        Log.i("Cuerda 6: ", string6.toString());
+        list.add(string6);
+        return list;
     }
 }

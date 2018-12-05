@@ -14,6 +14,7 @@ import com.example.enrique.organizadorcomposicion.Activity.ProjectActivity;
 import com.example.enrique.organizadorcomposicion.Activity.ScaleActivity;
 
 public class Display_buttonscale extends Fragment {
+    private int REQUEST_CODE = 12;
 
     public Display_buttonscale() {
     }
@@ -32,7 +33,7 @@ public class Display_buttonscale extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ScaleActivity.class);
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, REQUEST_CODE);
             }
         });
         return view;

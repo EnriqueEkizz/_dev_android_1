@@ -142,7 +142,6 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
             @Override
             public void onCompletion(MediaPlayer mp) {
                 stopMedia(lastPosition);
-                Log.i("last position; ", String.valueOf(lastPosition));
                 notifyItemChanged(lastPosition);
                 //ListHarmonyBlocks.get(lastPosition).setInflate(true);
                 lastPosition = -1;

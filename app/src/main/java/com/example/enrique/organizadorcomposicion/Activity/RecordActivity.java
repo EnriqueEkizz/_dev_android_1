@@ -107,6 +107,7 @@ public class RecordActivity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(), "Audio Recorder successfully", Toast.LENGTH_LONG).show();
         Intent returnIntent = new Intent();
+        returnIntent.putExtra("INDEX", 0);
         returnIntent.putExtra("PATH", outputFile);
         returnIntent.putExtra("NAME", nameRecording);
         returnIntent.putExtra("DATE", dateRecording);

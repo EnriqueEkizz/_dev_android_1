@@ -22,8 +22,7 @@
             android:background="@drawable/shape_e"
             android:layout_weight="1"
             android:layout_margin="3dp"
-            android:textSize="18dp"
-            android:text="A#"/>
+            android:textSize="18dp" />
         <Button
             android:id="@+id/string_5"
             android:layout_width="@dimen/squareButton"
@@ -31,8 +30,7 @@
             android:background="@drawable/shape_e"
             android:layout_weight="1"
             android:layout_margin="3dp"
-            android:textSize="18dp"
-            android:text="A#"/>
+            android:textSize="18dp" />
         <Button
             android:id="@+id/string_4"
             android:layout_width="@dimen/squareButton"
@@ -40,8 +38,7 @@
             android:background="@drawable/shape_e"
             android:layout_weight="1"
             android:layout_margin="3dp"
-            android:textSize="18dp"
-            android:text="A#"/>
+            android:textSize="18dp" />
         <Button
             android:id="@+id/string_3"
             android:layout_width="@dimen/squareButton"
@@ -49,8 +46,7 @@
             android:background="@drawable/shape_e"
             android:layout_weight="1"
             android:layout_margin="3dp"
-            android:textSize="18dp"
-            android:text="A#"/>
+            android:textSize="18dp" />
         <Button
             android:id="@+id/string_2"
             android:layout_width="@dimen/squareButton"
@@ -58,8 +54,7 @@
             android:background="@drawable/shape_e"
             android:layout_weight="1"
             android:layout_margin="3dp"
-            android:textSize="18dp"
-            android:text="A#"/>
+            android:textSize="18dp" />
         <Button
             android:id="@+id/string_1"
             android:layout_width="@dimen/squareButton"
@@ -67,7 +62,6 @@
             android:background="@drawable/shape_e"
             android:layout_weight="1"
             android:layout_margin="3dp"
-            android:textSize="18dp"
-            android:text="A#"/>
+            android:textSize="18dp" />
     </LinearLayout>
 </LinearLayout>

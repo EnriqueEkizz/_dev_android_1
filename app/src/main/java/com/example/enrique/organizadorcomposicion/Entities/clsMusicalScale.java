@@ -143,6 +143,6 @@ public class clsMusicalScale {
     }
 
     public String getChordFromIndex(int i) {
-        return this.MUSICAL_NOTES.get(i);
+        return this.MUSICAL_NOTES.get(i - 1);
     }
 }

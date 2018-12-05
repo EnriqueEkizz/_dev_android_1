@@ -37,6 +37,8 @@ public class ProjectActivity extends AppCompatActivity implements AdapterContent
     private DatabaseHelper dataHelper;
     private android.support.v7.view.ActionMode actionMode;
     private int REQUEST_CODE = 12;
+    FragmentManager frgManager;
+    FragmentTransaction frgTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +71,11 @@ public class ProjectActivity extends AppCompatActivity implements AdapterContent
         });
 
         //ESCALA MUSICAL DE PROYECTO
-        FragmentManager frgManager = getSupportFragmentManager();
-        FragmentTransaction frgTransaction = frgManager.beginTransaction();
-        if (projectStructure.getContent().getScale().length() != 0) {
+        frgManager = getSupportFragmentManager();
+        frgTransaction = frgManager.beginTransaction();
+        if (projectStructure.getContent().getScale() != 0) {
             // DESPLEGAR ESCALA
-            frgTransaction.add(R.id.frameSpaceMusicalScale, new Display_musicalscale().newInstance("C"));
+            frgTransaction.add(R.id.frameSpaceMusicalScale, new Display_musicalscale().newInstance(projectStructure.getContent().getScale(), projectStructure.getContent().getIndexScale()));
         } else {
             //BOTON MOSTRAR ACTIVIDAD IDENTIFICAR ESCALA
             frgTransaction.add(R.id.frameSpaceMusicalScale, new Display_buttonscale());
@@ -102,11 +104,20 @@ public class ProjectActivity extends AppCompatActivity implements AdapterContent
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE){
             if (resultCode == RESULT_OK) {
-                int index = data.getIntExtra("CALL_INDEX", 0);
-                projectStructure.getContent().setHarmonyBlockRecordingName(index, data.getStringExtra("NAME"));
-                projectStructure.getContent().setHarmonyBlockRecordingPath(index, data.getStringExtra("PATH"));
-                // REBUILD ADAPTADOR DE RECYCLERVIEW
-                createAdapterForProject(projectStructure);
+                int indexActivity = data.getIntExtra("INDEX", 0);
+                if (indexActivity == 0) {
+                    int index = data.getIntExtra("CALL_INDEX", 0);
+                    projectStructure.getContent().setHarmonyBlockRecordingName(index, data.getStringExtra("NAME"));
+                    projectStructure.getContent().setHarmonyBlockRecordingPath(index, data.getStringExtra("PATH"));
+                    // REBUILD ADAPTADOR DE RECYCLERVIEW
+                    createAdapterForProject(projectStructure);
+                } else {
+                    projectStructure.getContent().setScale(data.getIntExtra("CHORD", 0));
+                    projectStructure.getContent().setIndexScale(data.getIntExtra("ESCALA", 0));
+                    frgTransaction = frgManager.beginTransaction();
+                    frgTransaction.replace(R.id.frameSpaceMusicalScale, new Display_musicalscale().newInstance(data.getIntExtra("CHORD", 0), data.getIntExtra("ESCALA", 0)));
+                    frgTransaction.commit();
+                }
             }
         }
     }

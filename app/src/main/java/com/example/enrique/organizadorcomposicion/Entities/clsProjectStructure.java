@@ -73,7 +73,8 @@ public class clsProjectStructure {
     }
     // CLASE CONTENIDO: contiene los detalles del contenido de un proyecto
     public class clsContentProject{
-        private String Scale;
+        private int Scale;
+        private int IndexScale;
         private List<String> Recordings;
         private List<clsHarmonyBlock> HarmonyBlocks;
 
@@ -82,19 +83,26 @@ public class clsProjectStructure {
             this.HarmonyBlocks = new ArrayList<>();
         }
         // GETTER
-        public String getScale() {
+        public int getScale() {
             return Scale;
         }
+        public int getIndexScale() {
+            return IndexScale;
+        }
         // SETTER
-        public void setScale(String scale) {
+        public void setScale(int scale) {
             Scale = scale;
+        }
+        public void setIndexScale(int indexScale) {
+            IndexScale = indexScale;
         }
         // METHODS SET
         public void setContentData(String content){
             try {
                 JSONObject main = new JSONObject(content);
                 // SET scale ON project
-                this.Scale = main.getString("SCALE");
+                this.Scale = main.getInt("SCALE");
+                this.IndexScale = main.getInt("INDEXSCALE");
                 // SET recordings ON project
                 JSONArray arrGetting = main.getJSONArray("RECORDINGS");
                 if (arrGetting != null) {
@@ -149,6 +157,7 @@ public class clsProjectStructure {
                     arrBlocks.put(harmonyBlock.getJsonBlock());
                 }
                 jsonObject.put("SCALE", this.Scale);
+                jsonObject.put("INDEXSCALE", this.IndexScale);
                 jsonObject.put("RECORDINGS", arrRecorded);
                 jsonObject.put("HARMONYBLOCKS", arrBlocks);
 
@@ -161,11 +170,11 @@ public class clsProjectStructure {
         public String getJsonEmptyContent() {
             try{
                 JSONObject contentProject = new JSONObject();
-                contentProject.put("SCALE","");
+                contentProject.put("SCALE",0);
+                contentProject.put("INDEXSCALE",-1);
                 contentProject.put("RECORDINGS", new JSONArray());
                 contentProject.put("HARMONYBLOCKS", new JSONArray());
 
-                Log.i("STRINGO: ", contentProject.toString());
                 return contentProject.toString();
             } catch (Exception e){
                 e.printStackTrace();

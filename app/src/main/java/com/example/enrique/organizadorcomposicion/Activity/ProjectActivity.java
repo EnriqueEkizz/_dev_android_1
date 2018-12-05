@@ -24,6 +24,7 @@ import com.example.enrique.organizadorcomposicion.Data.clsDataProjects;
 import com.example.enrique.organizadorcomposicion.Display_buttonscale;
 import com.example.enrique.organizadorcomposicion.Display_musicalscale;
 import com.example.enrique.organizadorcomposicion.Entities.clsHarmonyBlock;
+import com.example.enrique.organizadorcomposicion.Entities.clsMusicalScale;
 import com.example.enrique.organizadorcomposicion.Entities.clsProjectStructure;
 import com.example.enrique.organizadorcomposicion.R;
 
@@ -124,7 +125,6 @@ public class ProjectActivity extends AppCompatActivity implements AdapterContent
 
     @Override
     public void onItemLongPress(int position) {
-        //Log.i("ENTRO e INDICE: ", String.valueOf(position));
         actionMode = startSupportActionMode(new ActionModeCallBack(position));
         select();
     }
@@ -165,15 +165,28 @@ public class ProjectActivity extends AppCompatActivity implements AdapterContent
 
     private class ActionModeCallBack implements ActionMode.Callback {
         int position;
+        private clsMusicalScale musicalScale = new clsMusicalScale();
 
         public ActionModeCallBack(int position) {
             this.position = position;
         }
+
         @Override
         public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
             MenuInflater inflater = actionMode.getMenuInflater();
             inflater.inflate(R.menu.menu_content_project, menu);
-            getWindow().setStatusBarColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
+            getWindow().setStatusBarColor(ContextCompat.getColor(getApplication(), R.color.colorPrimaryDark));
+
+            int chord = projectStructure.getContent().getScale();
+            int index = projectStructure.getContent().getIndexScale();
+
+            menu.findItem(R.id.addnote_1).setTitle(musicalScale.getChordFromScale(chord,index,1));
+            menu.findItem(R.id.addnote_2).setTitle(musicalScale.getChordFromScale(chord,index,2));
+            menu.findItem(R.id.addnote_3).setTitle(musicalScale.getChordFromScale(chord,index,3));
+            menu.findItem(R.id.addnote_4).setTitle(musicalScale.getChordFromScale(chord,index,4));
+            menu.findItem(R.id.addnote_5).setTitle(musicalScale.getChordFromScale(chord,index,5));
+            menu.findItem(R.id.addnote_6).setTitle(musicalScale.getChordFromScale(chord,index,6));
+            menu.findItem(R.id.addnote_7).setTitle(musicalScale.getChordFromScale(chord,index,7));
             return true;
         }
 
@@ -184,11 +197,42 @@ public class ProjectActivity extends AppCompatActivity implements AdapterContent
 
         @Override
         public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            int chord = projectStructure.getContent().getScale();
+            int index = projectStructure.getContent().getIndexScale();
             switch (menuItem.getItemId()) {
-                case R.id.action_addnote:
-                    projectStructure.getContent().addHarmonyNote(position,"C");
-                    //createAdapterForProject(projectStructure);
-                    projectStructure.getContent().getAllHarmonyBlock().get(position).setInflate(false);
+                    //projectStructure.getContent().getAllHarmonyBlock().get(position).setInflate(false);
+                case R.id.addnote_1:
+                    projectStructure.getContent().addHarmonyNote(position,  musicalScale.getChordFromScale(chord,index,1));
+                    adapterContentProject.notifyItemChanged(position);
+                    actionMode.finish();
+                    return true;
+                case R.id.addnote_2:
+                    projectStructure.getContent().addHarmonyNote(position,  musicalScale.getChordFromScale(chord,index,2));
+                    adapterContentProject.notifyItemChanged(position);
+                    actionMode.finish();
+                    return true;
+                case R.id.addnote_3:
+                    projectStructure.getContent().addHarmonyNote(position,  musicalScale.getChordFromScale(chord,index,3));
+                    adapterContentProject.notifyItemChanged(position);
+                    actionMode.finish();
+                    return true;
+                case R.id.addnote_4:
+                    projectStructure.getContent().addHarmonyNote(position,  musicalScale.getChordFromScale(chord,index,4));
+                    adapterContentProject.notifyItemChanged(position);
+                    actionMode.finish();
+                    return true;
+                case R.id.addnote_5:
+                    projectStructure.getContent().addHarmonyNote(position,  musicalScale.getChordFromScale(chord,index,5));
+                    adapterContentProject.notifyItemChanged(position);
+                    actionMode.finish();
+                    return true;
+                case R.id.addnote_6:
+                    projectStructure.getContent().addHarmonyNote(position,  musicalScale.getChordFromScale(chord,index,6));
+                    adapterContentProject.notifyItemChanged(position);
+                    actionMode.finish();
+                    return true;
+                case R.id.addnote_7:
+                    projectStructure.getContent().addHarmonyNote(position,  musicalScale.getChordFromScale(chord,index,7));
                     adapterContentProject.notifyItemChanged(position);
                     actionMode.finish();
                     return true;

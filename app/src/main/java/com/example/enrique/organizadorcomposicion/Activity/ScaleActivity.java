@@ -23,13 +23,14 @@ public class ScaleActivity extends AppCompatActivity {
     private ArrayList<Integer> notesPressed;
     private ArrayList<Integer> notasCoincidencia = new ArrayList<>();
     private clsMusicalScale musicalScale;
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scale);
 
-        ViewPager viewPager = findViewById(R.id.vpScale);
+        viewPager = findViewById(R.id.vpScale);
         PageAdapter_scale pageAdapter_scale = new PageAdapter_scale(getSupportFragmentManager());
         guitar = new screen_guitar();
 
@@ -83,6 +84,7 @@ public class ScaleActivity extends AppCompatActivity {
                     c++;
                 }
                 percent();
+                viewPager.setCurrentItem(1);
             }
         });
     }

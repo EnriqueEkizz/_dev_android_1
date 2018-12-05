@@ -5,7 +5,38 @@
         android:id="@+id/action_addnote"
         android:icon="@drawable/ic_note"
         app:showAsAction="always"
-        android:title="Add note"/>
+        android:title="Add note">
+        <menu>
+            <item
+                android:id="@+id/addnote_1"
+                android:title=""
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/addnote_2"
+                android:title=""
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/addnote_3"
+                android:title=""
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/addnote_4"
+                android:title=""
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/addnote_5"
+                android:title=""
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/addnote_6"
+                android:title=""
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/addnote_7"
+                android:title=""
+                app:showAsAction="never"/>
+        </menu>
+    </item>
     <item
         android:id="@+id/action_moveup"
         android:icon="@drawable/ic_go_up"

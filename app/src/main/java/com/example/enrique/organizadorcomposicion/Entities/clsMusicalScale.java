@@ -145,4 +145,15 @@ public class clsMusicalScale {
     public String getChordFromIndex(int i) {
         return this.MUSICAL_NOTES.get(i - 1);
     }
+    public String getChordFromScale(int chord, int indexScale, int position) {
+        ArrayList<Integer> scale = this.ESCALAS.get(indexScale);
+        int sum = chord;
+        for (int n = 0; n < position; n++) {
+            sum = sum + scale.get(n);
+            if (sum > 12) {
+                sum = sum - 12;
+            }
+        }
+        return getChordFromIndex(sum);
+    }
 }

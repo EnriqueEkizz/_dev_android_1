@@ -9,6 +9,7 @@ public class clsMusicalScale {
     public ArrayList<ArrayList<Integer>> ESCALAS = new ArrayList<>();
     public ArrayList<Integer> ESCALA_MAYOR = new ArrayList<>();
     public ArrayList<Integer> ESCALA_MENOR = new ArrayList<>();
+    public ArrayList<String> COORDENADAS_NOTAS = new ArrayList<>();
 
     private int string_1;
     private int string_2;
@@ -56,71 +57,19 @@ public class clsMusicalScale {
         this.string_5 = 10; // A
         this.string_6 = 5;  // E
         this.NOTES_SELECTED = new ArrayList<>();
-    }
-
-    public void addNoteSelected(int x, int y){
-        int ind = 0;
-        //String note;
-        switch (x) {
-            case 1:
-                ind = this.string_1 + y;
-                break;
-            case 2:
-                ind = this.string_2 + y;
-                break;
-            case 3:
-                ind = this.string_3 + y;
-                break;
-            case 4:
-                ind = this.string_4 + y;
-                break;
-            case 5:
-                ind = this.string_5 + y;
-                break;
-            case 6:
-                ind = this.string_6 + y;
-                break;
-        }
-        // Agregando notas pisadas
-        if (!this.MUSICAL_NOTES.contains(ind)) {
-            this.NOTES_SELECTED.add(ind);
-        }
-    }
-
-    public ArrayList<Integer> getScaleMatch() {
-        ArrayList<Integer> coincidencia = new ArrayList<>();
-        int v, n, c;
-        //Recorrer notas musicales
-        for (int e = 1; e < 13; e++) {
-            n = 0;
-            c = 0;
-            //Recorrer escala mayor
-            for (int i = 0; i < this.ESCALA_MAYOR.size(); i++) {
-                v = this.ESCALA_MAYOR.get(i);
-                n = n + e + v;
-                //Verificar si "n" esta contenido en notas pisadas
-                if (this.NOTES_SELECTED.contains(n)) {
-                    c++;
-                }
-            }
-            //Agregar coincidencia
-            coincidencia.add(c);
-
-            n = 0;
-            c = 0;
-            //Recorrer escala menor
-            for (int i = 0; i < this.ESCALA_MENOR.size(); i++) {
-                v = this.ESCALA_MENOR.get(i);
-                n = n + e + v;
-                //Verificar si "n" esta contenido en notas pisadas
-                if (this.NOTES_SELECTED.contains(n)) {
-                    c++;
-                }
-            }
-            //Agregar coincidencia
-            coincidencia.add(c);
-        }
-        return coincidencia;
+        //COORDENADAS GRAFICO DE NOTAS
+        this.COORDENADAS_NOTAS.add("1-2|2-4|3-5"); // C
+        this.COORDENADAS_NOTAS.add("1-1|1-2|1-3|1-4|1-5|1-6|2-2|3-4|4-5"); // C#
+        this.COORDENADAS_NOTAS.add("2-1|3-2|2-3"); // D
+        this.COORDENADAS_NOTAS.add("3-1|3-2|3-3|3-4|3-5|3-6|4-2|5-4"); // D#
+        this.COORDENADAS_NOTAS.add("1-3|2-4|2-5"); // E
+        this.COORDENADAS_NOTAS.add("1-1|1-2|1-3|1-4|1-5|1-6|2-3|3-4|3-5"); // F
+        this.COORDENADAS_NOTAS.add("2-1|2-2|2-3|2-4|2-5|2-6|3-3|4-4|4-5"); // F#
+        this.COORDENADAS_NOTAS.add("2-5|3-1|3-2|3-6"); // G
+        this.COORDENADAS_NOTAS.add("4-1|4-2|4-3|4-4|4-5|4-6|5-3|6-4|6-5"); // G#
+        this.COORDENADAS_NOTAS.add("2-2|2-3|2-4"); // A
+        this.COORDENADAS_NOTAS.add("1-1|1-2|1-3|1-4|1-5|1-6|3-2|3-3|3-4"); // A#
+        this.COORDENADAS_NOTAS.add("2-1|2-2|2-3|2-4|2-5|2-6|4-2|4-3|4-4"); // B
     }
 
     public int getString_1() {
@@ -155,5 +104,9 @@ public class clsMusicalScale {
             }
         }
         return getChordFromIndex(sum);
+    }
+
+    public String getCoordinatesFromChord(String chord){
+        return this.COORDENADAS_NOTAS.get(this.MUSICAL_NOTES.indexOf(chord));
     }
 }

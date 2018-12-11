@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.enrique.organizadorcomposicion.Activity.RecordActivity;
+import com.example.enrique.organizadorcomposicion.Activity.ScaleActivity;
 import com.example.enrique.organizadorcomposicion.Entities.clsHarmonyBlock;
 import com.example.enrique.organizadorcomposicion.Entities.clsProjectStructure;
 
@@ -96,11 +97,10 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
 
         // INSERTAR NOTAS DE CIRUCLO ARMONICO EN BLOQUE INICIALES
         //if (!harmonyBlock.isInflated()) { // Verificar si ya esta inflado
-        Log.i("Inflar: ", String.valueOf(harmonyBlock.isInflate()));
         //if (!harmonyBlock.isInflate()) {
-            for (String note : harmonyBlock.getHarmonyNotes()) {
-                addHarmonyNote(note, context, vHolder.frameNotes, false, 0);
-            }
+        for (String note : harmonyBlock.getHarmonyNotes()) {
+            addHarmonyNote(note, context, vHolder.frameNotes, false, 0);
+        }
             //harmonyBlock.setInflate(true);
         //}
 
@@ -149,10 +149,18 @@ public class AdapterContentProject extends RecyclerView.Adapter<AdapterContentPr
         });
 
     }
-    private void addHarmonyNote(String xNote, Context xContext, LinearLayout xLinearLayout, boolean addToList, int xPosition) {
+    private void addHarmonyNote(final String xNote, Context xContext, LinearLayout xLinearLayout, boolean addToList, int xPosition) {
         Button imgbtn = new Button(context);
         imgbtn.setTransformationMethod(null);
         imgbtn.setText(xNote);
+        imgbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ScaleActivity.class);
+                intent.putExtra("CHORD",  xNote);
+                context.startActivity(intent);
+            }
+        });
         imgbtn.setBackgroundColor(ContextCompat.getColor(context,R.color.white));
         imgbtn.setHeight(50);
         imgbtn.setWidth(50);

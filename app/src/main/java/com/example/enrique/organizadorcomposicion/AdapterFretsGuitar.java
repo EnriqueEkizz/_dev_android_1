@@ -13,16 +13,19 @@ import android.widget.TextView;
 import com.example.enrique.organizadorcomposicion.Entities.clsFretsGuitar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AdapterFretsGuitar extends RecyclerView.Adapter<AdapterFretsGuitar.VHolder> {
 
     private Context context;
+    private String[] drawNote;
     List<clsFretsGuitar> ListFretsGuitar;
 
-    public AdapterFretsGuitar(Context context, List<clsFretsGuitar> listFretsGuitar) {
+    public AdapterFretsGuitar(Context context, List<clsFretsGuitar> listFretsGuitar, String drawNote) {
         this.context = context;
         ListFretsGuitar = listFretsGuitar;
+        this.drawNote = drawNote.split("\\|");
     }
 
     public class VHolder extends RecyclerView.ViewHolder{
@@ -59,12 +62,36 @@ public class AdapterFretsGuitar extends RecyclerView.Adapter<AdapterFretsGuitar.
     public void onBindViewHolder(@NonNull final VHolder vHolder, int i) {
         clsFretsGuitar fretsGuitar = ListFretsGuitar.get(i);
 
-        //vHolder.tvFretNumber.setText(fretsGuitar.getNumberFret(i));
-        /*switch (i) {
-            case 2: case 4: case 6: case 8: case 11: case 14: case 16: case 18: case 20: case 23:
-                vHolder.tvFretNumber.setText(fretsGuitar.getNumberFret());
-        }*/
         vHolder.tvFretNumber.setText(fretsGuitar.getNumberFret());
+
+        if (drawNote.length > 1) {
+            for (int j = 1; j < 7; j++) {
+                String coo = (i + 1) + "-" + j;
+                if (Arrays.asList(drawNote).contains(coo)) {
+                    switch (j) {
+                        case 1:
+                            vHolder.btnString1.setBackgroundResource(R.drawable.shape_c);
+                            break;
+                        case 2:
+                            vHolder.btnString2.setBackgroundResource(R.drawable.shape_c);
+                            break;
+                        case 3:
+                            vHolder.btnString3.setBackgroundResource(R.drawable.shape_c);
+                            break;
+                        case 4:
+                            vHolder.btnString4.setBackgroundResource(R.drawable.shape_c);
+                            break;
+                        case 5:
+                            vHolder.btnString5.setBackgroundResource(R.drawable.shape_c);
+                            break;
+                        case 6:
+                            vHolder.btnString6.setBackgroundResource(R.drawable.shape_c);
+                            break;
+                    }
+                }
+            }
+
+        }
 
         vHolder.btnString1.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -30,11 +30,21 @@ public class ScaleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scale);
 
+        //ESCALA MUSICAL
+        musicalScale = new clsMusicalScale();
+
         viewPager = findViewById(R.id.vpScale);
         PageAdapter_scale pageAdapter_scale = new PageAdapter_scale(getSupportFragmentManager());
-        guitar = new screen_guitar();
 
-        //screen_percentage = Screen_percentage.newInstance(notasCoincidencia);
+        if (getIntent().getExtras() != null) {
+            String c = getIntent().getExtras().getString("CHORD");
+            String coo = musicalScale.getCoordinatesFromChord(c);
+            guitar = screen_guitar.newInstance(coo);
+        } else {
+            guitar = new screen_guitar();
+        }
+
+
         screen_percentage = new Screen_percentage();
         screen_percentage.arrPercentages = notasCoincidencia;
         pageAdapter_scale.addPageList(guitar);
@@ -44,9 +54,6 @@ public class ScaleActivity extends AppCompatActivity {
         //TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //ESCALA MUSICAL
-        musicalScale = new clsMusicalScale();
 
         //FLOATING BUTTON
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

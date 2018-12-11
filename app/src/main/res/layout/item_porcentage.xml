@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginBottom="10dp"
+    android:background="@color/white">
+    <TextView
+        android:id="@+id/tvAcorde"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:paddingHorizontal="15dp"
+        android:textColor="@color/font_black_333"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ProgressBar
+                android:id="@+id/pbPorcentaje"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                android:max="7" />
+            <ImageButton
+                android:id="@+id/ibElegirEscala"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:src="@drawable/ic_check_color"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
